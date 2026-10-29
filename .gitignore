@@ -22,3 +22,23 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Ortam değişkenleri (örnek dosya hariç)
+.env
+.env.*
+!.env.example
+
+# TypeScript ve Vite önbellekleri
+*.tsbuildinfo
+.vite
+
+# Test çıktıları
+coverage
+test-results
+playwright-report
+
+# İşletim sistemi
+Thumbs.db
+
+# Claude Code'un kişisel ayarları
+.claude/settings.local.json

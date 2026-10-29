@@ -1,6 +1,6 @@
 # Eleman.net · Başvurularım
 
-Eleman.net aday uygulamasının "Başvurularım" deneyimi için tıklanabilir prototip. React + TypeScript + Tailwind CSS (Vite) ile yazıldı. Görsel referans `Eleman.net · Başvurularım prototipi.html` dosyasıdır; o dosya olduğu gibi duruyor.
+Eleman.net aday uygulamasının "Başvurularım" deneyimi için tıklanabilir prototip. React + TypeScript + Tailwind CSS (Vite) ile yazıldı.
 
 Prototip **tamamen mock veriyle** çalışır: arka uç, API ya da kalıcı kayıt yoktur. Sayfa yenilenince her şey başlangıç hâline döner.
 
@@ -83,7 +83,7 @@ Alt sayfalar (başvuru formu, filtreler, yeni saat önerisi) ve onay pencereleri
 ```
 src/
   styles/
-    tokens.css          DS token'ları (renk, boşluk, tip, gölge; açık/koyu tema), prototipten birebir
+    tokens.css          DS token'ları (renk, boşluk, tip, gölge; açık/koyu tema)
     ds/*.css            DS bileşen stilleri (en-*, ds-*), @layer components
     index.css           katman sırası + Tailwind teması (yalnız DS token'larına bağlı)
   components/
