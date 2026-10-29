@@ -1,0 +1,99 @@
+.en-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  min-width: 0;
+  width: 100%;
+  max-width: 400px;
+  font-family: var(--font-family-base);
+}
+.en-field__label {
+  font: var(--type-label);
+  color: var(--text-primary);
+}
+.en-field__req {
+  color: var(--feedback-error);
+}
+.en-field__control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: var(--size-field);
+  padding: 0 var(--space-12) 0 var(--space-12);
+  background: var(--bg-surface);
+  border: var(--border-width-default) solid var(--border-strong);
+  border-radius: var(--radius-control);
+  transition:
+    border-color var(--duration-fast) var(--easing-standard),
+    box-shadow var(--duration-fast) var(--easing-standard);
+}
+.en-field__icon {
+  color: var(--text-secondary);
+}
+.en-field__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  outline: none;
+  font: var(--type-body-large);
+  color: var(--text-primary);
+}
+.en-field__input::placeholder {
+  color: var(--text-tertiary);
+}
+.en-field__input[type="number"] {
+  font-variant-numeric: tabular-nums;
+}
+@media (hover: hover) {
+  .en-field__control:hover {
+    border-color: var(--border-hover);
+  }
+}
+.en-field.is-hover .en-field__control {
+  border-color: var(--border-hover);
+}
+.en-field__control:focus-within,
+.en-field.is-focus .en-field__control {
+  border-color: var(--border-focus);
+  box-shadow: inset 0 0 0 1px var(--border-focus);
+}
+.en-field.is-error .en-field__control {
+  border-color: var(--feedback-error);
+  box-shadow: inset 0 0 0 1px var(--feedback-error);
+}
+.en-field__helper {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  margin: 0;
+  font: var(--type-caption);
+  color: var(--text-secondary);
+}
+.en-field.is-error .en-field__helper {
+  color: var(--feedback-error);
+  font-weight: var(--font-weight-medium);
+}
+.en-field.is-error .en-field__helper .en-icon {
+  margin-top: 0;
+}
+.en-field.is-disabled,
+.en-field.is-disabled * {
+  cursor: not-allowed;
+}
+.en-field__clear {
+  display: grid;
+  place-items: center;
+  width: var(--space-32);
+  height: var(--space-32);
+  margin-right: calc(var(--space-4) * -1);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.en-field__clear:hover {
+  background: var(--bg-muted);
+}

@@ -1,0 +1,91 @@
+.en-tabs {
+  width: 100%;
+  max-width: 560px;
+}
+.en-tabs__list {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.en-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  flex: none;
+  height: var(--size-control-lg);
+  padding: 0 var(--space-16);
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font: var(--type-label);
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.en-tabs--full .en-tabs__tab {
+  flex: 1;
+}
+.en-tabs__tab.is-active {
+  color: var(--action-primary);
+  font-weight: var(--font-weight-semibold);
+}
+.en-tabs__count {
+  min-width: var(--size-badge);
+  height: var(--size-badge);
+  padding: 0 var(--space-4);
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--radius-full);
+  background: var(--feedback-neutral-bg);
+  color: var(--text-secondary);
+  font: var(--type-caption);
+  font-weight: var(--font-weight-semibold);
+}
+.en-tabs__tab.is-active .en-tabs__count {
+  background: var(--action-secondary);
+  color: var(--action-on-secondary);
+}
+.en-tabs__tab.en-focus:focus-visible,
+.en-tabs__tab.is-focus {
+  outline-offset: calc(var(--border-focus-width) * -1);
+}
+.en-tabs--underline .en-tabs__list {
+  gap: 0;
+  box-shadow: inset 0 calc(var(--border-width-default) * -1) 0
+    var(--border-default);
+}
+.en-tabs--underline .en-tabs__tab {
+  border-radius: var(--radius-control) var(--radius-control) 0 0;
+}
+.en-tabs--underline .en-tabs__tab.is-active {
+  box-shadow: inset 0 -3px 0 var(--action-primary);
+}
+.en-tabs--segmented .en-tabs__list {
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--bg-subtle);
+  box-shadow: inset 0 0 0 var(--border-width-default) var(--border-default);
+}
+.en-tabs--segmented .en-tabs__tab {
+  height: var(--size-control-md);
+  border-radius: var(--radius-control);
+}
+.en-tabs--segmented .en-tabs__tab.is-active {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow:
+    var(--elevation-1),
+    inset 0 0 0 var(--border-width-default) var(--border-default);
+}
+.en-tabs__panel {
+  padding: var(--space-16) var(--space-4);
+  font: var(--type-body-medium);
+  color: var(--text-secondary);
+  border-radius: var(--radius-control);
+}
+.en-tabs__panel:focus-visible {
+  outline: var(--border-focus-width) solid var(--border-focus);
+  outline-offset: var(--border-focus-offset);
+}

@@ -1,0 +1,93 @@
+.en-avatar {
+  --_s: var(--size-avatar-md);
+  position: relative;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: var(--_s);
+  height: var(--_s);
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-semibold);
+  font-size: calc(var(--_s) * 0.38);
+  line-height: 1;
+  letter-spacing: 0;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.en-avatar--xs {
+  --_s: var(--size-avatar-xs);
+  font-size: 10px;
+}
+.en-avatar--sm {
+  --_s: var(--size-avatar-sm);
+}
+.en-avatar--lg {
+  --_s: var(--size-avatar-lg);
+}
+.en-avatar--xl {
+  --_s: var(--size-avatar-xl);
+}
+.en-avatar--company {
+  border-radius: var(--radius-control);
+}
+.en-avatar--company.en-avatar--lg,
+.en-avatar--company.en-avatar--xl {
+  border-radius: var(--radius-card);
+}
+.en-avatar--blue {
+  background: var(--action-secondary);
+  color: var(--action-on-secondary);
+}
+.en-avatar--green {
+  background: var(--feedback-success-bg);
+  color: var(--feedback-success);
+}
+.en-avatar--indigo {
+  background: var(--highlight-bg);
+  color: var(--highlight-default);
+}
+.en-avatar--amber {
+  background: var(--feedback-warning-bg);
+  color: var(--feedback-warning);
+}
+.en-avatar--slate {
+  background: var(--feedback-neutral-bg);
+  color: var(--feedback-neutral);
+}
+.en-avatar__status {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 28%;
+  height: 28%;
+  min-width: var(--space-8);
+  min-height: var(--space-8);
+  border-radius: var(--radius-full);
+  background: var(--progress-default);
+  box-shadow: 0 0 0 var(--border-width-strong) var(--bg-surface);
+}
+.en-avatar.is-open {
+  box-shadow:
+    0 0 0 var(--border-width-strong) var(--bg-surface),
+    0 0 0 calc(var(--border-width-strong) * 2) var(--progress-default);
+}
+.en-avatar__tag {
+  position: absolute;
+  bottom: calc(var(--space-4) * -1);
+  left: 50%;
+  transform: translate(-50%);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--feedback-success);
+  color: var(--text-on-action);
+  font: var(--type-caption);
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: var(--font-weight-semibold);
+}
+.en-avatar--xl .en-avatar__tag {
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  padding: 0 var(--space-8);
+}

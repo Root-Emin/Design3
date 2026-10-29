@@ -1,0 +1,425 @@
+.en-appbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: inset 0 calc(var(--border-width-default) * -1) 0
+    var(--border-default);
+  transition: box-shadow var(--duration-base) var(--easing-standard);
+}
+.en-appbar.is-scrolled {
+  box-shadow: var(--elevation-2);
+}
+.en-appbar--mobile {
+  height: var(--size-appbar-mobile);
+  padding: 0 var(--space-4);
+  max-width: 420px;
+}
+.en-appbar__spacer {
+  width: var(--space-12);
+}
+.en-appbar__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font: var(--type-title);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: var(--space-4);
+}
+.en-appbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.en-appbar__action {
+  position: relative;
+  display: inline-flex;
+}
+.en-appbar__dot {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--space-8);
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: var(--radius-full);
+  background: var(--feedback-error);
+  box-shadow: 0 0 0 var(--border-width-strong) var(--bg-surface);
+}
+.en-appbar--desktop {
+  container-type: inline-size;
+  height: var(--size-appbar-desktop);
+  padding: 0 var(--space-24);
+  gap: var(--space-24);
+}
+.en-appbar__brand {
+  font: var(--type-heading-3);
+  letter-spacing: var(--type-heading-2-tracking);
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+.en-appbar__nav {
+  display: flex;
+  gap: var(--space-4);
+}
+.en-appbar__link {
+  display: inline-flex;
+  align-items: center;
+  height: var(--size-control-md);
+  padding: 0 var(--space-12);
+  border-radius: var(--radius-control);
+  color: var(--text-secondary);
+  font: var(--type-label);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.en-appbar__link.is-current {
+  color: var(--action-primary);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: inset 0 -2px 0 var(--action-primary);
+  border-radius: var(--radius-control) var(--radius-control) 0 0;
+}
+.en-appbar__search {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 360px;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: var(--size-control-md);
+  padding: 0 var(--space-12);
+  border-radius: var(--radius-full);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  box-shadow: inset 0 0 0 var(--border-width-default) var(--border-default);
+}
+.en-appbar__search:focus-within {
+  box-shadow: inset 0 0 0 var(--border-focus-width) var(--border-focus);
+}
+.en-appbar__search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: var(--type-body-medium);
+  color: var(--text-primary);
+}
+.en-appbar__search input::placeholder {
+  color: var(--text-tertiary);
+}
+.en-appbar--desktop .en-appbar__actions {
+  margin-left: auto;
+}
+.en-appbar__search + .en-appbar__actions {
+  margin-left: 0;
+}
+@container (max-width: 720px) {
+  .en-appbar__search {
+    display: none;
+  }
+  .en-appbar__search + .en-appbar__actions {
+    margin-left: auto;
+  }
+}
+@container (max-width: 480px) {
+  .en-appbar__nav {
+    display: none;
+  }
+}
+/* Uygulama çubuğu varyantları (renk, kenarlık, mobil ızgara) */
+.en-appbar {
+  --_bar-bg: var(--bg-surface);
+  --_bar-fg: var(--text-primary);
+  --_bar-icon: var(--text-secondary);
+  --_bar-focus: var(--border-focus);
+  --_badge-ring: var(--bg-surface);
+  background: var(--_bar-bg);
+  color: var(--_bar-fg);
+}
+.en-appbar--brand {
+  --_bar-bg: var(--action-primary);
+  --_bar-fg: var(--text-on-action);
+  --_bar-icon: var(--text-on-action);
+  --_bar-focus: var(--text-on-action);
+  --_badge-ring: var(--text-on-action);
+}
+.en-appbar--tonal {
+  --_bar-bg: var(--action-secondary);
+  --_bar-icon: var(--action-on-secondary);
+  --_badge-ring: var(--action-secondary);
+}
+.en-appbar--border-none {
+  box-shadow: none;
+}
+.en-appbar--border-framed {
+  box-shadow: inset 0 0 0 var(--border-width-default) var(--border-strong);
+  border-radius: var(--radius-card);
+}
+.en-appbar--border-framed.is-scrolled {
+  box-shadow:
+    inset 0 0 0 var(--border-width-default) var(--border-strong),
+    var(--elevation-2);
+}
+.en-appbar .en-iconbtn--standard {
+  color: var(--_bar-icon);
+}
+.en-appbar .en-focus:focus-visible,
+.en-appbar .en-focus.is-focus {
+  outline-color: var(--_bar-focus);
+}
+.en-appbar--contained .en-iconbtn {
+  border-radius: var(--radius-control);
+}
+.en-appbar--tonal .en-iconbtn--tonal {
+  background: var(--bg-surface);
+}
+.en-appbar__dot {
+  box-shadow: 0 0 0 var(--border-width-strong) var(--_badge-ring);
+}
+.en-appbar__count {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  min-width: var(--space-16);
+  height: var(--space-16);
+  padding: 0 var(--space-4);
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-full);
+  background: var(--feedback-error);
+  color: var(--text-on-action);
+  font: var(--type-overline);
+  letter-spacing: 0;
+  line-height: var(--space-16);
+  box-shadow: 0 0 0 var(--border-width-strong) var(--_badge-ring);
+  pointer-events: none;
+}
+.en-appbar--mobile {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-4);
+}
+.en-appbar--mobile.en-appbar--center {
+  grid-template-columns: minmax(max-content, 1fr) minmax(0, auto) minmax(
+      max-content,
+      1fr
+    );
+}
+.en-appbar__start,
+.en-appbar__end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.en-appbar--center .en-appbar__start {
+  justify-self: start;
+}
+.en-appbar--center .en-appbar__end {
+  justify-self: end;
+}
+.en-appbar--mobile .en-appbar__end {
+  padding-right: var(--space-4);
+}
+.en-appbar__center {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.en-appbar--center .en-appbar__center {
+  justify-content: center;
+}
+.en-appbar--center .en-appbar__title {
+  text-align: center;
+  padding: 0;
+}
+.en-appbar__logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-control-md);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-sm);
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  font: var(--type-heading-3);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--type-heading-2-tracking);
+}
+.en-appbar--brand .en-appbar__brand {
+  color: inherit;
+}
+.en-appbar--brand .en-appbar__link,
+.en-appbar--brand .en-appbar__link.is-current {
+  color: var(--_bar-fg);
+}
+.en-appbar--brand .en-appbar__link.is-current {
+  box-shadow: inset 0 -2px 0 var(--_bar-fg);
+}
+.en-appbar--brand .en-appbar__search {
+  background: var(--bg-surface);
+  box-shadow: none;
+}
+/*
+ * Yuvarlatılmış birincil çubuk (--brand ile birlikte). Ekranın en üstünden başlar: üst safe area
+ * (çentik, Dynamic Island) çubuğun iç boşluğu olur, yükseklik içerik ve safe area'ya göre büyür.
+ * Alt köşelerdeki eğri ikonlara değmesin diye alttan pay bırakılır; çizgi ve gölge yoktur.
+ */
+.en-appbar--mobile.en-appbar--rounded {
+  --_bar-bg: var(--appbar-brand-bg);
+  height: auto;
+  min-height: calc(
+    var(--size-appbar-mobile) + env(safe-area-inset-top, 0px) + var(--space-8)
+  );
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: var(--space-8);
+  padding-left: max(var(--space-4), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--space-4), env(safe-area-inset-right, 0px));
+  border-radius: 0 0 var(--radius-sheet) var(--radius-sheet);
+  box-shadow: none;
+}
+.en-appbar--rounded .en-appbar__logo {
+  font: var(--type-heading-2);
+  font-weight: var(--font-weight-bold);
+}
+/* Sağdaki eylemin dış kenarı alt alanın (arama kutusu) kenarıyla hizalanır. */
+.en-appbar--rounded.en-appbar--center .en-appbar__end {
+  padding-right: var(--space-12);
+}
+/* Çerçeveli düğme (menü): birincil zeminde yarı saydam açık çerçeve, köşeli kontrol yarıçapı. */
+.en-appbar--brand .en-iconbtn--outlined {
+  border-color: color-mix(in srgb, var(--_bar-fg) 60%, transparent);
+  border-radius: var(--radius-control);
+  color: var(--_bar-icon);
+}
+/*
+ * Alt alan (arama kutusu, sekmeler, profil kartı) çubuğun kardeşidir ve çubuğun alt kenarından yarı taşar.
+ * Mavi zemin alt alanın ::before'u ile çizilir: çubuğun arkasından içeriğin tam ortasına kadar. Çubuğun
+ * yuvarlak alt köşeleri bu zeminin önünde kalır, görünmez; alt alan kaydırmayla çubuğun altına kayıp
+ * gidince köşeler ortaya çıkar ve çubuk kompakt hâline iner. Yükseklik değişmez, sayfa kaymaz.
+ */
+.en-appbar__bottom {
+  --_bar-bg: var(--appbar-brand-bg);
+  --_bar-h: calc(
+    var(--size-appbar-mobile) + var(--space-8) + env(safe-area-inset-top, 0px)
+  );
+  --_edge: color-mix(in srgb, var(--action-primary) 40%, transparent);
+  position: relative;
+  /* Çubuğun hemen altında: ::before çubuğun arkasına uzanır, içerik alt alanın altından geçer. */
+  z-index: calc(var(--z-sticky) - 1);
+  min-width: 0;
+  /* İçeriğin doğal genişliği (ör. uzun e-posta) kabı genişletmez. */
+  contain: inline-size;
+  padding: 0 max(var(--space-16), env(safe-area-inset-right, 0px)) 0
+    max(var(--space-16), env(safe-area-inset-left, 0px));
+}
+.en-appbar__bottom::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: calc(var(--_bar-h) * -1) 0 50%;
+  border-radius: 0 0 var(--radius-sheet) var(--radius-sheet);
+  background: var(--_bar-bg);
+}
+/* Sabit alt alan (sekmeler): kaydırmada kaybolmaz, çubuğun hemen altında kalır. */
+.en-appbar__bottom--pinned {
+  position: sticky;
+  top: var(--_bar-h);
+}
+/* Alt alandaki yüzeyler: beyaz zemin, ince birincil çerçeve, kart yarıçapı. */
+.en-appbar__bottom .en-appbar__search,
+.en-appbar__panel {
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: inset 0 0 0 var(--border-width-default) var(--_edge);
+}
+.en-appbar__panel {
+  padding: var(--inset-card);
+}
+.en-appbar__bottom .en-appbar__search {
+  display: flex;
+  max-width: none;
+  margin: 0;
+  height: var(--size-control-lg);
+  padding: 0 var(--space-16);
+  gap: var(--space-12);
+  color: var(--text-secondary);
+}
+.en-appbar__bottom .en-appbar__search:focus-within {
+  box-shadow: inset 0 0 0 var(--border-focus-width) var(--border-focus);
+}
+.en-appbar__bottom .en-appbar__search > .en-icon {
+  flex: none;
+  color: var(--action-primary);
+}
+.en-appbar__bottom .en-appbar__search input {
+  font: var(--type-body-large);
+}
+/* Segmented sekmeler: arama kutusuyla aynı yüzey ve yükseklik; etkin sekme tonal birincil. */
+.en-appbar__bottom .en-tabs--segmented .en-tabs__list {
+  background: var(--bg-surface);
+  box-shadow: inset 0 0 0 var(--border-width-default) var(--_edge);
+}
+.en-appbar__bottom .en-tabs--segmented .en-tabs__tab.is-active {
+  background: var(--action-secondary);
+  color: var(--action-primary);
+  box-shadow: none;
+}
+.en-appbar__bottom .en-tabs--segmented .en-tabs__tab.is-active .en-tabs__count {
+  background: var(--bg-surface);
+}
+
+/*
+ * Kaydırmaya bağlı daralma. Alt alanın içeriği çubuğun altına girerken solar ve hafifçe küçülür; logo
+ * başlık boyutuna (heading-3 / heading-2 = 20/24) iner. Destekleyen tarayıcıda scroll-driven animation
+ * (kompozitörde, JS'siz); desteklemeyende AppBar `--_p` (0–1) yazar. Yalnız opacity ve transform.
+ */
+@keyframes en-appbar-bottom-out {
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@keyframes en-appbar-logo-compact {
+  to {
+    transform: scale(0.8333);
+  }
+}
+/* Hareket azaltma tercihinde alt alan yalnız kayar; solma ve küçülme olmaz. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .en-appbar__bottom:not(.en-appbar__bottom--pinned) > * {
+      animation: en-appbar-bottom-out linear both;
+      /* Görünüm alanının üstü çubuğun alt kenarı sayılır: "exit" içerik çubuğun altına girerken ilerler. */
+      animation-timeline: view(
+        block calc(var(--size-appbar-mobile) + var(--space-8) + env(safe-area-inset-top, 0px)) 0px
+      );
+      animation-range: exit 0% exit 100%;
+    }
+    .en-appbar--rounded .en-appbar__logo {
+      animation: en-appbar-logo-compact linear both;
+      animation-timeline: scroll();
+      animation-range: 0 var(--size-control-lg);
+    }
+  }
+  @supports not (animation-timeline: view()) {
+    .en-appbar__bottom:not(.en-appbar__bottom--pinned) > * {
+      opacity: calc(1 - var(--_p, 0));
+      transform: scale(calc(1 - 0.04 * var(--_p, 0)));
+    }
+    .en-appbar--rounded .en-appbar__logo {
+      transform: scale(calc(1 - 0.1667 * var(--_p, 0)));
+    }
+  }
+}

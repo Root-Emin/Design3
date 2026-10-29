@@ -1,0 +1,194 @@
+/*
+ * Katman sırası: token'lar → temel → DS bileşenleri → Tailwind yardımcı sınıfları.
+ * Tailwind preflight bilinçli olarak yüklenmez: DS bileşen stilleri tarayıcı varsayılanları
+ * ve DS'in kendi sıfırlaması üzerine yazıldı; preflight görsel farklar üretir.
+ */
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@source "../";
+
+@import "./tokens.css" layer(theme);
+
+@import "./ds/primitives.css" layer(components);
+@import "./ds/en-track.css" layer(components);
+@import "./ds/en-avatar.css" layer(components);
+@import "./ds/en-badge.css" layer(components);
+@import "./ds/en-sheet.css" layer(components);
+@import "./ds/en-chip.css" layer(components);
+@import "./ds/en-toggle.css" layer(components);
+@import "./ds/en-dialog.css" layer(components);
+@import "./ds/en-iconbtn.css" layer(components);
+@import "./ds/en-job.css" layer(components);
+@import "./ds/en-match.css" layer(components);
+@import "./ds/en-li.css" layer(components);
+@import "./ds/en-pcm.css" layer(components);
+@import "./ds/en-progress.css" layer(components);
+@import "./ds/en-salary.css" layer(components);
+@import "./ds/en-snack.css" layer(components);
+@import "./ds/en-tabs.css" layer(components);
+@import "./ds/en-field.css" layer(components);
+@import "./ds/en-appbar.css" layer(components);
+@import "./ds/ds-button.css" layer(components);
+@import "./ds/ds-alert.css" layer(components);
+@import "./ds/ds-bnav.css" layer(components);
+@import "./ds/ds-field.css" layer(components);
+@import "./ds/ds-check.css" layer(components);
+@import "./ds/ds-badge.css" layer(components);
+@import "./ds/ds-skeleton.css" layer(components);
+@import "./ds/ds-status.css" layer(components);
+@import "./ds/ds-track.css" layer(components);
+@import "./ds/ds-app-card.css" layer(components);
+@import "./ds/en-chat.css" layer(components);
+
+/*
+ * Tailwind teması yalnızca DS token'larını açar; varsayılan palet, ölçek ve kırılma noktaları kapatılır.
+ * Boşluk anahtarları DS adlarıyla aynıdır: p-16 = --space-16 = 16px.
+ */
+@theme inline {
+  --*: initial;
+
+  --font-sans: var(--font-base);
+
+  --breakpoint-medium: 600px;
+  --breakpoint-expanded: 840px;
+  --breakpoint-large: 1200px;
+
+  --spacing-0: var(--space-0);
+  --spacing-2: var(--space-2);
+  --spacing-4: var(--space-4);
+  --spacing-8: var(--space-8);
+  --spacing-12: var(--space-12);
+  --spacing-16: var(--space-16);
+  --spacing-20: var(--space-20);
+  --spacing-24: var(--space-24);
+  --spacing-32: var(--space-32);
+  --spacing-40: var(--space-40);
+  --spacing-48: var(--space-48);
+  --spacing-64: var(--space-64);
+  --spacing-appbar: var(--size-appbar-mobile);
+  --spacing-bottomnav: var(--size-bottomnav);
+
+  --color-canvas: var(--bg-canvas);
+  --color-surface: var(--bg-surface);
+  --color-subtle: var(--bg-subtle);
+  --color-raised: var(--surface-raised);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-tertiary: var(--text-tertiary);
+  --color-action-secondary: var(--action-secondary);
+  --color-success: var(--feedback-success);
+  --color-success-bg: var(--feedback-success-bg);
+
+  --text-heading-1: var(--type-heading-1-size);
+  --text-heading-1--line-height: var(--type-heading-1-line);
+  --text-heading-1--font-weight: var(--type-heading-1-weight);
+  --text-heading-1--letter-spacing: var(--type-heading-1-tracking);
+  --text-heading-2: var(--type-heading-2-size);
+  --text-heading-2--line-height: var(--type-heading-2-line);
+  --text-heading-2--font-weight: var(--type-heading-2-weight);
+  --text-heading-2--letter-spacing: var(--type-heading-2-tracking);
+  --text-heading-3: var(--type-heading-3-size);
+  --text-heading-3--line-height: var(--type-heading-3-line);
+  --text-heading-3--font-weight: var(--type-heading-3-weight);
+  --text-title: var(--type-title-size);
+  --text-title--line-height: var(--type-title-line);
+  --text-title--font-weight: var(--type-title-weight);
+  --text-body-lg: var(--type-body-large-size);
+  --text-body-lg--line-height: var(--type-body-large-line);
+  --text-body-lg--font-weight: var(--type-body-large-weight);
+  --text-body-md: var(--type-body-medium-size);
+  --text-body-md--line-height: var(--type-body-medium-line);
+  --text-body-md--font-weight: var(--type-body-medium-weight);
+  --text-caption: var(--type-caption-size);
+  --text-caption--line-height: var(--type-caption-line);
+  --text-caption--font-weight: var(--type-caption-weight);
+  --text-overline: var(--type-overline-size);
+  --text-overline--line-height: var(--type-overline-line);
+  --text-overline--font-weight: var(--type-overline-weight);
+  --text-overline--letter-spacing: var(--type-overline-tracking);
+
+  --font-weight-semibold: 600;
+
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-sheet: 24px;
+  --radius-full: 999px;
+
+  --shadow-hairline: inset 0 0 0 var(--border-width-default) var(--border-default);
+  --shadow-hairline-top: inset 0 var(--border-width-default) 0 var(--border-default);
+  --shadow-hairline-bottom: inset 0 calc(var(--border-width-default) * -1) 0 var(--border-default);
+  --shadow-hairline-strong: inset 0 0 0 var(--border-width-default) var(--border-strong);
+  /* Zemin (bg-subtle) üstünde duran liste kartı: yumuşak gölge + silik kenar; satır arası ince çizgi. */
+  --shadow-card: var(--elevation-1), inset 0 0 0 var(--border-width-default) var(--border-subtle);
+  --shadow-divider-subtle: inset 0 calc(var(--border-width-default) * -1) 0 var(--border-subtle);
+  --shadow-frame: var(--elevation-4), 0 0 0 var(--border-width-default) var(--border-default);
+  --shadow-popover: var(--elevation-4), inset 0 0 0 var(--border-width-default) var(--border-default);
+
+  --animate-fade: fade var(--duration-base) var(--easing-standard);
+  --animate-rise: rise var(--duration-slow) var(--easing-decelerate);
+  --animate-rise-fast: rise var(--duration-base) var(--easing-decelerate);
+
+  @keyframes rise {
+    from {
+      transform: translateY(16px);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  :root {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  /* Yuvarlatılmış App Bar üst safe area'yı kendisi karşılar; zemini durum çubuğunun altına uzanır. */
+  :root:has(.en-appbar--rounded) {
+    padding-top: 0;
+  }
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    font: var(--type-body-medium);
+    color: var(--text-primary);
+    background: var(--bg-subtle);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "cv11", "ss01";
+    overflow: hidden;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+  :focus-visible {
+    outline: var(--border-focus-width) solid var(--border-focus);
+    outline-offset: var(--border-focus-offset);
+  }
+}

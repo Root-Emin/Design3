@@ -1,0 +1,189 @@
+.ds-track {
+  --node: var(--ds-size-node);
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  max-width: 480px;
+  color: var(--ds-text-primary);
+}
+.ds-track__step {
+  --st: var(--ds-status-application);
+  --st-subtle: var(--ds-status-application-subtle);
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+.ds-track__step--viewed {
+  --st: var(--ds-status-viewed);
+  --st-subtle: var(--ds-status-viewed-subtle);
+}
+.ds-track__step--pending {
+  --st: var(--ds-status-pending);
+  --st-subtle: var(--ds-status-pending-subtle);
+}
+.ds-track__step--closed {
+  --st: var(--ds-status-closed);
+  --st-subtle: var(--ds-status-closed-subtle);
+}
+.ds-track__rail {
+  display: flex;
+  align-items: center;
+}
+.ds-track__node {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--node);
+  height: var(--node);
+  border: 2px dashed var(--ds-border-strong);
+  border-radius: var(--ds-radius-pill);
+  background: var(--ds-surface-default);
+  color: var(--ds-text-tertiary);
+}
+.ds-track__node .ds-icon {
+  stroke-width: 2.5;
+}
+.ds-track__step.is-done .ds-track__node {
+  border: 0;
+  background: var(--st-subtle);
+  color: var(--st);
+}
+.ds-track__step.is-current .ds-track__node {
+  border: 0;
+  background: var(--st);
+  color: var(--ds-text-inverse);
+  box-shadow: 0 0 0 4px var(--st-subtle);
+}
+.ds-track__step.is-open .ds-track__node {
+  border-style: dashed;
+}
+.ds-track__line {
+  flex: 1;
+  border-top: 2px dashed var(--ds-border-strong);
+}
+.ds-track__step.is-done .ds-track__line {
+  border-top-style: solid;
+  border-color: var(--st);
+}
+.ds-track__step:last-child .ds-track__line {
+  display: none;
+}
+.ds-track__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.ds-track__label {
+  font: var(--ds-type-body-sm);
+  color: var(--ds-text-secondary);
+}
+.ds-track__step.is-current .ds-track__label {
+  font: var(--ds-type-label-md);
+  color: var(--ds-text-primary);
+}
+.ds-track__step.is-upcoming .ds-track__label,
+.ds-track__step.is-open .ds-track__label {
+  color: var(--ds-text-tertiary);
+}
+.ds-track__tag {
+  align-self: flex-start;
+  padding: 0 6px;
+  border: 1px dashed var(--ds-border-strong);
+  border-radius: var(--ds-radius-sm);
+  font: var(--ds-type-caption);
+  font-size: 11px;
+  color: var(--ds-text-tertiary);
+}
+.ds-track__date {
+  font: var(--ds-type-caption);
+  color: var(--ds-text-tertiary);
+}
+.ds-track--horizontal .ds-track__step {
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+}
+.ds-track--horizontal .ds-track__step:last-child {
+  flex: 0 0 auto;
+}
+.ds-track--horizontal .ds-track__line {
+  margin: 0 var(--ds-space-1);
+}
+.ds-track--horizontal .ds-track__body {
+  padding-right: var(--ds-space-2);
+}
+.ds-track--vertical {
+  flex-direction: column;
+}
+.ds-track--vertical .ds-track__step {
+  gap: var(--ds-space-3);
+}
+.ds-track--vertical .ds-track__rail {
+  flex-direction: column;
+  align-self: stretch;
+}
+.ds-track--vertical .ds-track__line {
+  border-top: 0;
+  border-left: 2px dashed var(--ds-border-strong);
+  margin: var(--ds-space-1) 0;
+  min-height: var(--ds-space-4);
+}
+.ds-track--vertical .ds-track__step.is-done .ds-track__line {
+  border-left-style: solid;
+  border-color: var(--st);
+}
+.ds-track--vertical .ds-track__body {
+  padding: 2px 0 var(--ds-space-4);
+}
+.ds-track__detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+  margin-top: var(--ds-space-2);
+  padding: var(--ds-space-3);
+  border-radius: var(--ds-radius-md);
+  background: var(--st-subtle);
+  font: var(--ds-type-body-sm);
+  color: var(--ds-text-primary);
+}
+.ds-track__next {
+  display: flex;
+  gap: 6px;
+  color: var(--ds-text-secondary);
+}
+.ds-track__next .ds-icon {
+  margin-top: 2px;
+  color: var(--st);
+}
+.ds-track__next strong {
+  color: var(--ds-text-primary);
+  font-weight: 600;
+}
+.ds-track--compact {
+  --node: 16px;
+}
+.ds-track--compact .ds-track__body {
+  display: none;
+}
+.ds-track--compact .ds-track__step {
+  gap: 0;
+}
+.ds-track--compact .ds-track__node .ds-icon {
+  width: 10px;
+  height: 10px;
+}
+.ds-track--compact .ds-track__step.is-current .ds-track__node {
+  box-shadow: 0 0 0 3px var(--st-subtle);
+}
+/* DS boşluğu: Mülakat ve Teklif adımları (prototipten). */
+.ds-track__step--interview {
+  --st: var(--ds-feedback-info);
+  --st-subtle: var(--ds-feedback-info-subtle);
+}
+.ds-track__step--offer {
+  --st: var(--ds-feedback-success);
+  --st-subtle: var(--ds-feedback-success-subtle);
+}

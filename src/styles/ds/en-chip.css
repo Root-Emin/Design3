@@ -1,0 +1,72 @@
+.en-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: var(--size-chip);
+  padding: 0 var(--space-12);
+  border-radius: var(--radius-full);
+  border: var(--border-width-default) solid var(--border-strong);
+  background: var(--bg-surface);
+  font: var(--type-label);
+  color: var(--text-primary);
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
+}
+button.en-chip:before {
+  content: "";
+  position: absolute;
+  inset: calc((var(--size-touch-target) - var(--size-chip)) / -2) 0;
+}
+.en-chip .en-icon {
+  color: var(--text-secondary);
+}
+.en-chip.is-selected {
+  background: var(--action-secondary);
+  border-color: var(--border-selected);
+  color: var(--action-on-secondary);
+}
+.en-chip.is-selected .en-icon {
+  color: var(--action-on-secondary);
+}
+.en-chip--suggestion {
+  border-color: var(--border-default);
+}
+.en-chip--suggestion .en-icon {
+  color: var(--highlight-default);
+}
+.en-chip--info {
+  cursor: default;
+  border-color: transparent;
+  background: var(--bg-muted);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+.en-chip--input {
+  cursor: default;
+  padding-right: var(--space-4);
+}
+.en-chip__count {
+  font: var(--type-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.en-chip.is-selected .en-chip__count {
+  color: inherit;
+}
+.en-chip__remove {
+  display: grid;
+  place-items: center;
+  width: var(--space-24);
+  height: var(--space-24);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}

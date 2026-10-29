@@ -1,0 +1,44 @@
+.en-iconbtn {
+  --_s: var(--size-control-md);
+  display: inline-grid;
+  place-items: center;
+  width: var(--_s);
+  height: var(--_s);
+  padding: 0;
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
+}
+.en-iconbtn--sm {
+  --_s: var(--size-control-sm);
+}
+.en-iconbtn--lg {
+  --_s: var(--size-control-lg);
+}
+.en-iconbtn.is-selected {
+  color: var(--action-primary);
+}
+.en-iconbtn--filled {
+  background: var(--action-primary);
+  color: var(--text-on-action);
+}
+.en-iconbtn--filled.is-selected {
+  color: var(--text-on-action);
+}
+.en-iconbtn--tonal {
+  background: var(--action-secondary);
+  color: var(--action-on-secondary);
+}
+.en-iconbtn--tonal.is-selected {
+  background: var(--action-primary);
+  color: var(--text-on-action);
+}
+.en-iconbtn--outlined {
+  border-color: var(--border-strong);
+}

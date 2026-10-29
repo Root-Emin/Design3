@@ -1,0 +1,73 @@
+.en-dialog-frame {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 360px;
+  padding: var(--space-24) var(--space-16);
+  border-radius: var(--radius-card);
+}
+.en-dialog-frame.has-scrim {
+  background: var(--bg-scrim);
+}
+.en-dialog {
+  position: relative;
+  display: grid;
+  gap: var(--space-12);
+  width: 100%;
+  max-width: 400px;
+  padding: var(--space-24);
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: var(--elevation-4);
+  z-index: var(--z-modal);
+}
+.en-dialog__icon {
+  display: grid;
+  place-items: center;
+  width: var(--space-48);
+  height: var(--space-48);
+  border-radius: var(--radius-full);
+  background: var(--action-secondary);
+  color: var(--action-on-secondary);
+}
+.en-dialog__icon.is-destructive {
+  background: var(--feedback-error-bg);
+  color: var(--feedback-error);
+}
+.en-dialog__title {
+  margin: 0;
+  font: var(--type-heading-3);
+  letter-spacing: var(--type-heading-3-tracking);
+  padding-right: var(--space-24);
+}
+.en-dialog__body {
+  margin: 0;
+  font: var(--type-body-medium);
+  color: var(--text-secondary);
+}
+.en-dialog__actions {
+  display: flex;
+  gap: var(--space-8);
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: var(--space-12);
+}
+.en-dialog--stacked .en-dialog__actions {
+  flex-direction: column-reverse;
+}
+.en-dialog__close {
+  position: absolute;
+  top: var(--space-16);
+  right: var(--space-16);
+  display: grid;
+  place-items: center;
+  width: var(--size-control-md);
+  height: var(--size-control-md);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}

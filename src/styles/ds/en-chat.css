@@ -1,0 +1,17 @@
+/* Mesajlaşma: balon ve kart yüzeyleri. Yalnız DS token'larından türetilir; koyu temada ayrışmayı korur. */
+.en-chat {
+  --chat-incoming: var(--bg-subtle);
+  --chat-outgoing: var(--action-secondary);
+  --chat-card: var(--bg-surface);
+}
+[data-theme="dark"] .en-chat {
+  --chat-incoming: var(--surface-raised);
+  --chat-card: var(--bg-muted);
+}
+/* Hızlı yanıt satırı yatay kayar; kaydırma çubuğu gizlenir, dokunmayla kaydırma kalır. */
+.en-chat__scroller {
+  scrollbar-width: none;
+}
+.en-chat__scroller::-webkit-scrollbar {
+  display: none;
+}

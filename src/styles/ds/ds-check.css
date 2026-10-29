@@ -1,0 +1,122 @@
+.ds-check-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-1);
+  max-width: 420px;
+}
+.ds-check {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--ds-space-3);
+  color: var(--ds-text-primary);
+  font: var(--ds-type-body-md);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.ds-check__input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--ds-size-icon-md);
+  height: var(--ds-size-icon-md);
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+.ds-check__box {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--ds-size-icon-md);
+  height: var(--ds-size-icon-md);
+  border: 2px solid var(--ds-border-emphasis);
+  border-radius: 5px;
+  background: var(--ds-surface-default);
+  color: var(--ds-action-on-primary);
+  transition:
+    background-color var(--ds-motion-duration-fast)
+      var(--ds-motion-easing-standard),
+    box-shadow var(--ds-motion-duration-fast) var(--ds-motion-easing-standard),
+    transform var(--ds-motion-duration-fast) var(--ds-motion-easing-standard);
+}
+.ds-check__box .ds-icon {
+  grid-area: 1 / 1;
+  opacity: 0;
+  stroke-width: 3;
+}
+.ds-check:hover .ds-check__box,
+.ds-check.is-hover .ds-check__box {
+  border-color: var(--ds-action-primary);
+  box-shadow: 0 0 0 6px var(--ds-action-tertiary-hover);
+}
+.ds-check:active .ds-check__box,
+.ds-check.is-pressed .ds-check__box {
+  box-shadow: 0 0 0 6px var(--ds-action-tertiary-pressed);
+  transform: scale(0.92);
+}
+.ds-check__input:focus-visible + .ds-check__box,
+.ds-check.is-focus .ds-check__box {
+  outline: var(--ds-focus-ring-width) solid var(--ds-border-focus);
+  outline-offset: var(--ds-focus-ring-offset);
+}
+.ds-check__input:checked + .ds-check__box,
+.ds-check.is-indeterminate .ds-check__box {
+  background: var(--ds-action-primary);
+  border-color: var(--ds-action-primary);
+}
+.ds-check:hover .ds-check__input:checked + .ds-check__box,
+.ds-check.is-hover .ds-check__input:checked + .ds-check__box {
+  background: var(--ds-action-primary-hover);
+  border-color: var(--ds-action-primary-hover);
+}
+.ds-check__input:checked + .ds-check__box [data-icon="check"] {
+  opacity: 1;
+}
+.ds-check.is-indeterminate .ds-check__box [data-icon="check"] {
+  opacity: 0;
+}
+.ds-check.is-indeterminate .ds-check__box [data-icon="minus"] {
+  opacity: 1;
+}
+.ds-check.is-error .ds-check__box {
+  border-color: var(--ds-feedback-error);
+}
+.ds-check__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ds-check__label {
+  font: var(--ds-type-body-md);
+  line-height: var(--ds-size-icon-md);
+}
+.ds-check__desc {
+  font: var(--ds-type-body-sm);
+  color: var(--ds-text-secondary);
+}
+.ds-check.is-disabled {
+  cursor: not-allowed;
+}
+.ds-check.is-disabled .ds-check__box {
+  background: var(--ds-action-disabled);
+  border-color: var(--ds-border-default);
+  color: var(--ds-text-disabled);
+  box-shadow: none;
+  transform: none;
+}
+.ds-check.is-disabled .ds-check__label,
+.ds-check.is-disabled .ds-check__desc {
+  color: var(--ds-text-disabled);
+}
+.ds-check__error {
+  display: flex;
+  gap: 6px;
+  margin: 0 0 0 calc(var(--ds-size-icon-md) + var(--ds-space-3));
+  font: var(--ds-type-body-sm);
+  color: var(--ds-feedback-error-text);
+}
+.ds-check__error .ds-icon {
+  color: var(--ds-feedback-error);
+  margin-top: 1px;
+}

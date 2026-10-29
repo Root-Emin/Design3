@@ -1,0 +1,183 @@
+.ds-status {
+  --st: var(--ds-status-application);
+  --st-subtle: var(--ds-status-application-subtle);
+  --st-text: var(--ds-status-application-text);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--ds-size-badge-md);
+  padding: 0 var(--ds-space-2);
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-sm);
+  background: var(--st-subtle);
+  color: var(--st-text);
+  font: var(--ds-type-label-sm);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.ds-status--viewed {
+  --st: var(--ds-status-viewed);
+  --st-subtle: var(--ds-status-viewed-subtle);
+  --st-text: var(--ds-status-viewed-text);
+}
+.ds-status--pending {
+  --st: var(--ds-status-pending);
+  --st-subtle: var(--ds-status-pending-subtle);
+  --st-text: var(--ds-status-pending-text);
+}
+.ds-status--closed {
+  --st: var(--ds-status-closed);
+  --st-subtle: var(--ds-status-closed-subtle);
+  --st-text: var(--ds-status-closed-text);
+}
+.ds-status .ds-icon {
+  color: var(--st);
+}
+.ds-status--sm {
+  height: var(--ds-size-badge-sm);
+  padding: 0 6px;
+  gap: 4px;
+  font-size: 11px;
+}
+.ds-status--solid {
+  background: var(--st);
+  color: var(--ds-text-inverse);
+}
+.ds-status--solid .ds-icon {
+  color: inherit;
+}
+.ds-status--outline {
+  background: transparent;
+  border-color: var(--st);
+}
+.ds-status__date {
+  padding-left: 6px;
+  margin-left: 2px;
+  border-left: 1px solid currentColor;
+  font-weight: 400;
+  opacity: 0.85;
+}
+.ds-status-wrap {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ds-space-2);
+}
+.ds-status--interactive {
+  height: var(--ds-size-control-sm);
+  padding: 0 var(--ds-space-2) 0 var(--ds-space-3);
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.ds-status--interactive:after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity var(--ds-motion-duration-fast)
+    var(--ds-motion-easing-standard);
+  pointer-events: none;
+}
+.ds-status--interactive:hover:after,
+.ds-status--interactive.is-hover:after {
+  opacity: 0.08;
+}
+.ds-status--interactive:active:after,
+.ds-status--interactive.is-pressed:after {
+  opacity: 0.16;
+}
+.ds-status--interactive:focus-visible,
+.ds-status--interactive.is-focus {
+  outline: var(--ds-focus-ring-width) solid var(--ds-border-focus);
+  outline-offset: var(--ds-focus-ring-offset);
+}
+.ds-status--interactive:disabled,
+.ds-status--interactive.is-disabled {
+  background: var(--ds-action-disabled);
+  border-color: transparent;
+  color: var(--ds-text-disabled);
+  cursor: not-allowed;
+}
+.ds-status--interactive:disabled .ds-icon,
+.ds-status--interactive.is-disabled .ds-icon {
+  color: var(--ds-text-disabled);
+}
+.ds-status__help {
+  display: inline-flex;
+  margin-left: 2px;
+  opacity: 0.8;
+}
+.ds-status__help .ds-icon {
+  color: currentColor;
+}
+.ds-status__pop {
+  --st: var(--ds-status-application);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-1);
+  width: max-content;
+  max-width: 280px;
+  padding: var(--ds-space-3);
+  border: 1px solid var(--ds-border-default);
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-surface-raised);
+  box-shadow: var(--ds-shadow-md);
+  font: var(--ds-type-body-sm);
+  color: var(--ds-text-secondary);
+}
+.ds-status__pop[hidden] {
+  display: none;
+}
+.ds-status__pop--viewed {
+  --st: var(--ds-status-viewed);
+}
+.ds-status__pop--pending {
+  --st: var(--ds-status-pending);
+}
+.ds-status__pop--closed {
+  --st: var(--ds-status-closed);
+}
+.ds-status__pop-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: var(--ds-type-label-md);
+  color: var(--ds-text-primary);
+}
+.ds-status__pop-title .ds-icon {
+  color: var(--st);
+}
+.ds-status__pop-next {
+  padding-top: var(--ds-space-2);
+  margin-top: var(--ds-space-1);
+  border-top: 1px solid var(--ds-border-subtle);
+}
+.ds-status__pop-next strong {
+  color: var(--ds-text-primary);
+  font-weight: 600;
+}
+/* DS boşluğu: Mülakat ve Teklif modifier'ları DS'te yok; tracker'daki emsal token'lar kullanıldı (prototipten). */
+.ds-status--interview {
+  --st: var(--ds-feedback-info);
+  --st-subtle: var(--ds-feedback-info-subtle);
+  --st-text: var(--ds-feedback-info-text);
+}
+.ds-status--offer {
+  --st: var(--ds-feedback-success);
+  --st-subtle: var(--ds-feedback-success-subtle);
+  --st-text: var(--ds-feedback-success-text);
+}
+.ds-status__pop--interview {
+  --st: var(--ds-feedback-info);
+}
+.ds-status__pop--offer {
+  --st: var(--ds-feedback-success);
+}

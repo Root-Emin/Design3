@@ -1,0 +1,104 @@
+.ds-btn {
+  --btn-bg: var(--ds-action-primary);
+  --btn-bg-hover: var(--ds-action-primary-hover);
+  --btn-bg-pressed: var(--ds-action-primary-pressed);
+  --btn-fg: var(--ds-action-on-primary);
+  --btn-height: var(--ds-size-control-md);
+  --btn-pad: var(--ds-space-4);
+  --btn-font: var(--ds-type-label-md);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-2);
+  min-height: var(--btn-height);
+  padding: 0 var(--btn-pad);
+  border: 0;
+  border-radius: var(--ds-radius-md);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font: var(--btn-font);
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--ds-motion-duration-fast)
+      var(--ds-motion-easing-standard),
+    transform var(--ds-motion-duration-fast) var(--ds-motion-easing-standard);
+}
+.ds-btn--secondary {
+  --btn-bg: var(--ds-action-secondary);
+  --btn-bg-hover: var(--ds-action-secondary-hover);
+  --btn-bg-pressed: var(--ds-action-secondary-pressed);
+  --btn-fg: var(--ds-action-on-secondary);
+}
+.ds-btn--tertiary {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--ds-action-tertiary-hover);
+  --btn-bg-pressed: var(--ds-action-tertiary-pressed);
+  --btn-fg: var(--ds-action-tertiary);
+  --btn-pad: var(--ds-space-3);
+}
+.ds-btn--destructive {
+  --btn-bg: var(--ds-action-destructive);
+  --btn-bg-hover: var(--ds-action-destructive-hover);
+  --btn-bg-pressed: var(--ds-action-destructive-pressed);
+  --btn-fg: var(--ds-action-on-primary);
+}
+.ds-btn--sm {
+  --btn-height: var(--ds-size-control-sm);
+  --btn-pad: var(--ds-space-3);
+  --btn-font: var(--ds-type-label-sm);
+  border-radius: var(--ds-radius-sm);
+  gap: var(--ds-space-1);
+}
+.ds-btn--lg {
+  --btn-height: var(--ds-size-control-lg);
+  --btn-pad: var(--ds-space-5);
+  --btn-font: var(--ds-type-label-lg);
+}
+.ds-btn--block {
+  display: flex;
+  width: 100%;
+}
+.ds-btn:hover,
+.ds-btn.is-hover {
+  background: var(--btn-bg-hover);
+}
+.ds-btn:active,
+.ds-btn.is-pressed {
+  background: var(--btn-bg-pressed);
+  transform: scale(0.98);
+}
+.ds-btn:focus-visible,
+.ds-btn.is-focus {
+  outline: var(--ds-focus-ring-width) solid var(--ds-border-focus);
+  outline-offset: var(--ds-focus-ring-offset);
+}
+.ds-btn:disabled,
+.ds-btn.is-disabled {
+  background: var(--ds-action-disabled);
+  color: var(--ds-text-disabled);
+  cursor: not-allowed;
+  transform: none;
+}
+.ds-btn--tertiary:disabled,
+.ds-btn--tertiary.is-disabled {
+  background: transparent;
+}
+.ds-btn.is-loading {
+  cursor: progress;
+  transform: none;
+  background: var(--btn-bg);
+}
+.ds-btn.is-success {
+  --btn-bg: var(--ds-feedback-success);
+  --btn-bg-hover: var(--ds-feedback-success);
+  --btn-bg-pressed: var(--ds-feedback-success);
+  --btn-fg: var(--ds-text-inverse);
+  cursor: default;
+  transform: none;
+}
+.ds-btn__spinner {
+  display: inline-flex;
+}

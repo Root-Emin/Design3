@@ -1,0 +1,93 @@
+.en-salary {
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.en-salary--compact {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  font: var(--type-body-medium);
+  font-weight: var(--font-weight-medium);
+}
+.en-salary--compact .en-icon {
+  color: var(--text-secondary);
+}
+.en-salary--full {
+  display: grid;
+  gap: var(--space-8);
+  width: 100%;
+  max-width: 360px;
+}
+.en-salary__label {
+  margin: 0;
+  font: var(--type-label);
+  color: var(--text-secondary);
+}
+.en-salary__label span {
+  font-weight: var(--font-weight-regular);
+}
+.en-salary__value {
+  margin: 0;
+  font: var(--type-heading-2);
+  letter-spacing: var(--type-heading-2-tracking);
+  font-variant-numeric: tabular-nums;
+}
+.en-salary__scale {
+  position: relative;
+  height: var(--space-8);
+  margin: var(--space-8) 0 var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--progress-track);
+}
+.en-salary__range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: var(--radius-full);
+  background: var(--progress-default);
+}
+.en-salary__median {
+  position: absolute;
+  top: calc(var(--space-4) * -1);
+  width: var(--border-width-strong);
+  height: var(--space-16);
+  margin-left: calc(var(--border-width-strong) / -2);
+  border-radius: var(--radius-full);
+  background: var(--text-primary);
+}
+.en-salary__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  font: var(--type-caption);
+  color: var(--text-secondary);
+}
+.en-salary__key {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.en-salary__swatch {
+  width: var(--space-12);
+  height: var(--space-8);
+  border-radius: var(--radius-full);
+  background: var(--progress-default);
+}
+.en-salary__tick {
+  width: var(--border-width-strong);
+  height: var(--space-12);
+  border-radius: var(--radius-full);
+  background: var(--text-primary);
+}
+.en-salary__cmp {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  margin: var(--space-4) 0 0;
+  font: var(--type-body-medium);
+  color: var(--text-secondary);
+}
+.en-salary__cmp.is-up {
+  color: var(--feedback-success);
+  font-weight: var(--font-weight-medium);
+}

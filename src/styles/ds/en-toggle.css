@@ -1,0 +1,110 @@
+.en-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  justify-content: space-between;
+  min-height: var(--size-touch-target);
+  max-width: 440px;
+  width: 100%;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.en-toggle--end {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.en-toggle__text {
+  display: grid;
+  gap: var(--space-2);
+}
+.en-toggle__label {
+  font: var(--type-body-large);
+  color: var(--text-primary);
+}
+.en-toggle__desc {
+  font: var(--type-body-medium);
+  color: var(--text-secondary);
+}
+.en-toggle__wrap {
+  position: relative;
+  flex: none;
+}
+.en-toggle__input {
+  position: absolute;
+  inset: calc(var(--space-8) * -1);
+  opacity: 0;
+  margin: 0;
+  cursor: inherit;
+  z-index: 1;
+}
+.en-toggle__track {
+  display: flex;
+  align-items: center;
+  width: 52px;
+  height: 32px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--bg-muted);
+  border: var(--border-width-strong) solid var(--border-strong);
+  color: var(--text-secondary);
+  transition:
+    background-color var(--duration-base) var(--easing-standard),
+    border-color var(--duration-base) var(--easing-standard);
+}
+.en-toggle__thumb {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  background: var(--border-strong);
+  color: transparent;
+  transition:
+    transform var(--duration-base) var(--easing-standard),
+    width var(--duration-base) var(--easing-standard),
+    height var(--duration-base) var(--easing-standard);
+}
+.en-toggle__input:checked + .en-toggle__track {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+  color: var(--text-on-action);
+}
+.en-toggle__input:checked + .en-toggle__track .en-toggle__thumb {
+  width: 24px;
+  height: 24px;
+  transform: translate(16px);
+  background: var(--bg-surface);
+  color: var(--action-primary);
+}
+.en-toggle__input:not(:checked) + .en-toggle__track .en-toggle__thumb {
+  margin-left: var(--space-2);
+}
+@media (hover: hover) {
+  .en-toggle:hover .en-toggle__track:after {
+    opacity: var(--state-hover);
+  }
+}
+.en-toggle.is-hover .en-toggle__track:after {
+  opacity: var(--state-hover);
+}
+.en-toggle:active .en-toggle__track:after,
+.en-toggle.is-pressed .en-toggle__track:after {
+  opacity: var(--state-pressed);
+}
+.en-toggle.is-pressed .en-toggle__thumb {
+  transform: scale(1.1);
+}
+.en-toggle.is-pressed
+  .en-toggle__input:checked
+  + .en-toggle__track
+  .en-toggle__thumb {
+  transform: translate(16px) scale(1.1);
+}
+.en-toggle__input:focus-visible + .en-toggle__track,
+.en-toggle.is-focus .en-toggle__track {
+  outline: var(--border-focus-width) solid var(--border-focus);
+  outline-offset: var(--border-focus-offset);
+}
+.en-toggle.is-disabled {
+  cursor: not-allowed;
+}

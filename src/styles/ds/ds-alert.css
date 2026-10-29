@@ -1,0 +1,85 @@
+.ds-alert {
+  --al-accent: var(--ds-feedback-info);
+  --al-bg: var(--ds-feedback-info-subtle);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-3);
+  width: 100%;
+  max-width: 480px;
+  padding: var(--ds-space-3) var(--ds-space-3) var(--ds-space-3)
+    var(--ds-space-4);
+  border-radius: var(--ds-radius-lg);
+  background: var(--al-bg);
+  box-shadow: inset 4px 0 0 var(--al-accent);
+  color: var(--ds-text-primary);
+}
+.ds-alert[hidden] {
+  display: none;
+}
+.ds-alert--success {
+  --al-accent: var(--ds-feedback-success);
+  --al-bg: var(--ds-feedback-success-subtle);
+}
+.ds-alert--warning {
+  --al-accent: var(--ds-feedback-warning);
+  --al-bg: var(--ds-feedback-warning-subtle);
+}
+.ds-alert--error {
+  --al-accent: var(--ds-feedback-error);
+  --al-bg: var(--ds-feedback-error-subtle);
+}
+.ds-alert--banner {
+  max-width: none;
+  border-radius: 0;
+  box-shadow: inset 0 -1px 0 var(--al-accent);
+}
+.ds-alert__icon {
+  display: inline-flex;
+  color: var(--al-accent);
+  padding-top: 1px;
+}
+.ds-alert__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 1px 0;
+}
+.ds-alert__title {
+  margin: 0;
+  font: var(--ds-type-label-md);
+}
+.ds-alert__msg {
+  margin: 0;
+  font: var(--ds-type-body-md);
+  color: var(--ds-text-secondary);
+}
+.ds-alert__actions {
+  margin: var(--ds-space-1) 0 0 calc(var(--ds-space-3) * -1);
+}
+.ds-alert__close {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: var(--ds-size-control-sm);
+  height: var(--ds-size-control-sm);
+  margin: -4px -4px -4px 0;
+  border: 0;
+  border-radius: var(--ds-radius-sm);
+  background: transparent;
+  color: var(--ds-text-secondary);
+  cursor: pointer;
+}
+.ds-alert__close:hover {
+  background: var(--ds-action-tertiary-hover);
+  color: var(--ds-text-primary);
+}
+.ds-alert__close:active {
+  background: var(--ds-action-tertiary-pressed);
+}
+.ds-alert__close:focus-visible {
+  outline: var(--ds-focus-ring-width) solid var(--ds-border-focus);
+  outline-offset: 0;
+}

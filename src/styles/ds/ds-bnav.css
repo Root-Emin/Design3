@@ -1,0 +1,300 @@
+.ds-bnav {
+  display: flex;
+  width: 100%;
+  max-width: 420px;
+  padding: var(--ds-space-1) var(--ds-space-1) var(--ds-space-2);
+  border-top: 1px solid var(--ds-border-default);
+  background: var(--ds-surface-raised);
+}
+.ds-bnav__item {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: var(--ds-space-1) 0;
+  border-radius: var(--ds-radius-md);
+  color: var(--ds-text-secondary);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.ds-bnav__icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 32px;
+  border-radius: var(--ds-radius-pill);
+  transition: background-color var(--ds-motion-duration-fast)
+    var(--ds-motion-easing-standard);
+}
+.ds-bnav__label {
+  font: var(--ds-type-caption);
+  white-space: nowrap;
+}
+.ds-bnav__item:hover .ds-bnav__icon,
+.ds-bnav__item.is-hover .ds-bnav__icon {
+  background: var(--ds-action-tertiary-hover);
+}
+.ds-bnav__item:active .ds-bnav__icon,
+.ds-bnav__item.is-pressed .ds-bnav__icon {
+  background: var(--ds-action-tertiary-pressed);
+}
+.ds-bnav__item:focus-visible,
+.ds-bnav__item.is-focus {
+  outline: var(--ds-focus-ring-width) solid var(--ds-border-focus);
+  outline-offset: calc(var(--ds-focus-ring-width) * -1);
+}
+.ds-bnav__item[aria-current="page"] {
+  color: var(--ds-action-primary);
+}
+.ds-bnav__item[aria-current="page"] .ds-bnav__icon {
+  background: var(--ds-surface-selected);
+}
+.ds-bnav__item[aria-current="page"] .ds-bnav__label {
+  font: var(--ds-type-label-sm);
+}
+.ds-bnav__item.is-disabled {
+  color: var(--ds-text-disabled);
+  cursor: not-allowed;
+}
+.ds-bnav__badge {
+  position: absolute;
+  top: 0;
+  left: 32px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border: 2px solid var(--ds-surface-raised);
+  border-radius: var(--ds-radius-pill);
+  box-sizing: content-box;
+  background: var(--ds-feedback-attention);
+  color: var(--ds-text-inverse);
+  font: var(--ds-type-label-sm);
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+}
+.ds-bnav__badge.is-dot {
+  min-width: 0;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  top: 4px;
+  left: 34px;
+}
+.ds-bnav--icons .ds-bnav__item {
+  min-height: 48px;
+  justify-content: center;
+}
+/* Gösterge ve yarı saydam yüzey varyantları */
+.ds-bnav__item[aria-current="page"] .ds-bnav__icon {
+  background: color-mix(in srgb, var(--ds-action-primary) 14%, transparent);
+}
+.ds-bnav__item:hover .ds-bnav__icon,
+.ds-bnav__item.is-hover .ds-bnav__icon {
+  background: color-mix(in srgb, var(--ds-action-primary) 8%, transparent);
+}
+.ds-bnav__item:active .ds-bnav__icon,
+.ds-bnav__item.is-pressed .ds-bnav__icon {
+  background: color-mix(in srgb, var(--ds-action-primary) 18%, transparent);
+}
+.ds-bnav--translucent {
+  background: color-mix(in srgb, var(--ds-surface-raised) 72%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  backdrop-filter: blur(16px) saturate(1.6);
+  border-top-color: color-mix(
+    in srgb,
+    var(--ds-border-default) 70%,
+    transparent
+  );
+}
+.ds-bnav--translucent .ds-bnav__badge {
+  border-color: transparent;
+}
+.ds-bnav--floating {
+  padding: var(--ds-space-1);
+  border: 1px solid var(--ds-border-default);
+  border-radius: 24px;
+  box-shadow: var(--ds-shadow-md);
+}
+.ds-bnav--floating.ds-bnav--translucent {
+  border-color: color-mix(in srgb, var(--ds-border-default) 70%, transparent);
+}
+.ds-bnav--floating .ds-bnav__item {
+  border-radius: 20px;
+}
+.ds-bnav--tonal {
+  background: var(--ds-surface-secondary);
+}
+.ds-bnav--divider-none {
+  border-top-color: transparent;
+}
+.ds-bnav--ind-container .ds-bnav__item[aria-current="page"] {
+  background: color-mix(in srgb, var(--ds-action-primary) 12%, transparent);
+}
+.ds-bnav--ind-container .ds-bnav__item {
+  margin: 0 2px;
+}
+.ds-bnav--ind-container .ds-bnav__item[aria-current="page"] .ds-bnav__icon,
+.ds-bnav--ind-underline .ds-bnav__item[aria-current="page"] .ds-bnav__icon,
+.ds-bnav--ind-color .ds-bnav__item[aria-current="page"] .ds-bnav__icon {
+  background: transparent;
+}
+.ds-bnav--ind-underline .ds-bnav__item[aria-current="page"]:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 24px;
+  height: 3px;
+  transform: translate(-50%);
+  border-radius: var(--ds-radius-pill);
+  background: var(--ds-action-primary);
+}
+/*
+ * Liquid glass yüzen kapsül: içerik altından bulanık geçer; aktif sekmeyi ikon ve etiketi birlikte
+ * saran cam pill işaretler ve sekmeler arasında kayar (.ds-bnav__pill, --bnav-x / --bnav-w: aktif
+ * sekmenin konumu ve genişliği). Renkler tema token'larından gelir; temaya göre yalnız parlaklık değişir.
+ */
+.ds-bnav--glass {
+  --bnav-spring: linear(0, 0.15, 0.422, 0.669, 0.844, 0.947, 0.998, 1.017, 1.02, 1.016, 1.01, 1.005, 1.002, 1.001 65%, 1);
+  --bnav-radius: 22px;
+  --bnav-sheen: color-mix(in srgb, var(--neutral-0) 80%, transparent);
+  --bnav-pill-sheen: color-mix(in srgb, var(--neutral-0) 60%, transparent);
+  position: relative;
+  width: auto;
+  margin: 0 var(--ds-space-3) var(--ds-space-2);
+  padding: var(--ds-space-1) 6px;
+  border: 0;
+  border-radius: var(--ds-radius-pill);
+  background: color-mix(in srgb, var(--ds-surface-raised) 74%, transparent);
+  box-shadow:
+    inset 0 1px 0 var(--bnav-sheen),
+    inset 0 0 0 1px color-mix(in srgb, var(--ds-border-default) 70%, transparent),
+    var(--elevation-3);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ds-bnav--glass {
+    --bnav-sheen: color-mix(in srgb, var(--neutral-0) 10%, transparent);
+    --bnav-pill-sheen: color-mix(in srgb, var(--neutral-0) 12%, transparent);
+  }
+}
+[data-theme="dark"] .ds-bnav--glass {
+  --bnav-sheen: color-mix(in srgb, var(--neutral-0) 10%, transparent);
+  --bnav-pill-sheen: color-mix(in srgb, var(--neutral-0) 12%, transparent);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ds-bnav.ds-bnav--glass {
+    background: color-mix(in srgb, var(--ds-surface-raised) 96%, transparent);
+  }
+}
+.ds-bnav--glass .ds-bnav__item {
+  padding-inline: 6px;
+  border-radius: var(--bnav-radius);
+  transition: background-color var(--ds-motion-duration-fast) var(--ds-motion-easing-standard);
+}
+/* Odak halkası sekmenin dışında çizilir; kavisli köşeler etiketin üstünden geçmez. */
+.ds-bnav--glass .ds-bnav__item:focus-visible,
+.ds-bnav--glass .ds-bnav__item.is-focus {
+  outline-offset: 1px;
+}
+@media (hover: hover) {
+  .ds-bnav--glass .ds-bnav__item:not([aria-current="page"]):hover,
+  .ds-bnav--glass .ds-bnav__item.is-hover:not([aria-current="page"]) {
+    background: color-mix(in srgb, var(--ds-text-primary) 6%, transparent);
+  }
+}
+/* Etiketler tek ağırlıkta: aktif sekme değişince sekme genişlikleri oynamaz. */
+.ds-bnav--glass .ds-bnav__label {
+  font: var(--ds-type-label-sm);
+}
+/* İkon zemini pill'e taşındı; ikon kutusu daralır, rozet ikon merkezine göre yerleşir. */
+.ds-bnav--glass .ds-bnav__item .ds-bnav__icon {
+  width: 40px;
+  background: transparent;
+}
+.ds-bnav--glass .ds-bnav__badge {
+  left: calc(50% + 4px);
+  border-color: transparent;
+}
+.ds-bnav--glass .ds-bnav__badge.is-dot {
+  left: calc(50% + 6px);
+}
+.ds-bnav__pill {
+  position: absolute;
+  top: var(--ds-space-1);
+  bottom: var(--ds-space-1);
+  left: 0;
+  width: var(--bnav-w, 0px);
+  border-radius: var(--bnav-radius, var(--ds-radius-pill));
+  background:
+    linear-gradient(to bottom, var(--bnav-pill-sheen), transparent 60%),
+    color-mix(in srgb, var(--ds-action-primary) 12%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ds-action-primary) 16%, transparent),
+    inset 0 1px 1px var(--bnav-pill-sheen),
+    var(--elevation-1);
+  pointer-events: none;
+  transform: translateX(var(--bnav-x, 0px));
+  transition:
+    transform 300ms var(--ds-motion-easing-standard),
+    width 300ms var(--ds-motion-easing-standard),
+    scale 280ms var(--ds-motion-easing-standard);
+  transition:
+    transform 300ms var(--bnav-spring),
+    width 300ms var(--bnav-spring),
+    scale 280ms var(--bnav-spring);
+}
+/* Dar ekranlar: beş etiket sığsın diye önce kenar boşlukları, 360px altında sekme iç boşlukları daralır. */
+@media (max-width: 374px) {
+  .ds-bnav--glass {
+    margin-inline: var(--ds-space-2);
+    padding-inline: var(--ds-space-1);
+  }
+}
+@media (max-width: 359px) {
+  .ds-bnav--glass {
+    --bnav-radius: 16px;
+  }
+  .ds-bnav--glass .ds-bnav__item {
+    padding-inline: 2px;
+  }
+}
+/* Basınca hafif sıkışma, bırakınca yay ile geri dönüş. */
+.ds-bnav--glass .ds-bnav__icon {
+  transition: scale 280ms var(--ds-motion-easing-standard);
+  transition: scale 280ms var(--bnav-spring);
+}
+.ds-bnav--glass .ds-bnav__item:active .ds-bnav__icon,
+.ds-bnav--glass .ds-bnav__item.is-pressed .ds-bnav__icon {
+  scale: 0.95;
+  transition: scale var(--ds-motion-duration-fast) var(--ds-motion-easing-standard);
+}
+.ds-bnav--glass:has(.ds-bnav__item[aria-current="page"]:active) .ds-bnav__pill,
+.ds-bnav--glass:has(.ds-bnav__item[aria-current="page"].is-pressed) .ds-bnav__pill {
+  scale: 0.96;
+  transition:
+    transform 300ms var(--bnav-spring),
+    width 300ms var(--bnav-spring),
+    scale var(--ds-motion-duration-fast) var(--ds-motion-easing-standard);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-bnav__pill,
+  .ds-bnav--glass .ds-bnav__item,
+  .ds-bnav--glass .ds-bnav__icon,
+  .ds-bnav--glass .ds-bnav__item:active .ds-bnav__icon,
+  .ds-bnav--glass:has(.ds-bnav__item[aria-current="page"]:active) .ds-bnav__pill {
+    transition: none;
+  }
+  .ds-bnav--glass .ds-bnav__item:active .ds-bnav__icon,
+  .ds-bnav--glass .ds-bnav__item.is-pressed .ds-bnav__icon,
+  .ds-bnav--glass:has(.ds-bnav__item[aria-current="page"]:active) .ds-bnav__pill,
+  .ds-bnav--glass:has(.ds-bnav__item[aria-current="page"].is-pressed) .ds-bnav__pill {
+    scale: none;
+  }
+}
