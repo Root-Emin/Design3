@@ -37,7 +37,7 @@ Geçerli tasarım `v1`'dir. Eski ekranın sade kopyası (`#/baseline/...`) yaln�
 
 ## Demo paneli
 
-Sağ alttaki **Demo paneli** düğmesi prototipin durumunu değiştirir. Ürünün parçası değildir. Ekranı değiştiren bir seçimden sonra panel kapanır ve sonuç ekranı açılır.
+Sağ alttaki **Demo paneli** düğmesi prototipin durumunu değiştirir. Ürünün parçası değildir. Yalnız 600px ve üstü genişlikte görünür; mobil görünümde gizlidir. Ekranı değiştiren bir seçimden sonra panel kapanır ve sonuç ekranı açılır.
 
 | Grup | Seçenekler | Ne yapar |
 |---|---|---|

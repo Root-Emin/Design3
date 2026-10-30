@@ -129,7 +129,8 @@ export function DemoPanel() {
   return (
     <aside
       className={cn(
-        "fixed right-16 z-(--z-toast) grid max-w-[calc(100%-var(--space-32))] justify-items-end gap-8",
+        // Mobil görünümde (600px altı, uygulama tam ekran) panel gösterilmez; ekranı kapatmasın.
+        "fixed right-16 z-(--z-toast) grid max-w-[calc(100%-var(--space-32))] justify-items-end gap-8 max-medium:hidden",
         // Sohbet ekranında yazma alanının (ve gönder düğmesinin) üstünde durur.
         routeKeyOf(pathname) === "mesaj"
           ? "bottom-[calc(var(--space-16)+var(--size-control-lg)+var(--space-16)+env(safe-area-inset-bottom,0px))]"
