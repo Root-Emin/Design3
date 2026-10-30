@@ -1,13 +1,18 @@
 import { CircleAlert, CircleCheck, Info, type LucideIcon } from "lucide-react";
-import type { Toast } from "../../state/ToastProvider";
+import { useToast, type Toast } from "../../state/ToastProvider";
 import { Icon } from "../icons/Icon";
 
 const ICON: Record<Toast["tone"], LucideIcon> = { success: CircleCheck, info: Info, error: CircleAlert };
 
 /** DS Snackbar (ters zeminli, isteğe bağlı eylemli). */
 export function Snackbar({ toast }: { toast: Toast }) {
+  const { pauseToast, resumeToast } = useToast();
   return (
     <div
+      onMouseEnter={pauseToast}
+      onMouseLeave={resumeToast}
+      onFocus={pauseToast}
+      onBlur={resumeToast}
       className="en-snack pointer-events-auto animate-rise-fast motion-reduce:animate-none"
       role="status"
       aria-live="polite"

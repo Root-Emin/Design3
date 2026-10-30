@@ -43,6 +43,7 @@ const PRESETS: ReadonlyArray<readonly [DemoPreset, string]> = [
   ["filtre", "Filtre sonucu boş"],
   ["yukleniyor", "Yükleniyor"],
   ["hata", "Hata"],
+  ["cevrimdisi", "Çevrimdışı"],
 ];
 const PROFILE_PRESETS: ReadonlyArray<readonly [ProfilePreset, string]> = [
   ["eksik", "Eksik profil"],
@@ -52,7 +53,14 @@ const PROFILE_PRESETS: ReadonlyArray<readonly [ProfilePreset, string]> = [
 const EDGE_PRESETS: ReadonlyArray<readonly [DemoPreset, string]> = [
   ["25", "25 başvuru"],
   ["tek", "Tek başvuru"],
+  ["ilan-kaldirildi", "İlan kaldırıldı"],
 ];
+const DETAIL_PRESETS: ReadonlyArray<readonly [DemoPreset, string]> = [
+  ["detay-yukleniyor", "Detay yükleniyor"],
+  ["detay-hata", "Detay hatası"],
+];
+/** Detay durumları bu başvurunun detayında gösterilir (Deniz Enerji, Mülakat). */
+const DETAIL_DEMO_APP_ID = 2;
 
 /**
  * Demo paneli: yalnız prototip içindir, ürünün parçası değildir. Veri durumu, işverenin bildirimlerle
@@ -72,14 +80,20 @@ export function DemoPanel() {
     setOpen(false);
     if (pathname !== target) navigate(target);
   };
-  const preset = ([id, label]: readonly [DemoPreset, string]): DemoOption => ({
+  const preset = ([id, label]: readonly [DemoPreset, string], target = routePath("v1", "basvurularim")): DemoOption => ({
     label,
     id: `state-${id}`,
     selected: demoPreset === id,
     onSelect: () => {
       cancelAssistantReplies();
       dispatch({ type: "applyDemoPreset", preset: id });
-      show(routePath("v1", "basvurularim"));
+      show(target);
+    },
+  });
+  const withdrawOption = (fails: boolean, label: string): DemoOption => ({
+    label, id: `withdraw-${fails ? "fail" : "ok"}`, selected: state.withdrawFails === fails, onSelect: () => {
+      dispatch({ type: "setWithdrawFails", fails });
+      setOpen(false);
     },
   });
   // İşverenin bildirimle ilgili hareketi: yazışmaya mesaj, başvuruya okunmamış hareket olarak düşer.
@@ -135,8 +149,10 @@ export function DemoPanel() {
       >
         <Heading look="title">Demo paneli</Heading>
         <p className="m-0 text-caption text-tertiary">Yalnız prototip içindir; ürünün parçası değildir.</p>
-        <DemoGroup title="Başvurularım durumu" options={PRESETS.map(preset)} />
-        <DemoGroup title="Uç durumlar" options={EDGE_PRESETS.map(preset)} />
+        <DemoGroup title="Başvurularım durumu" options={PRESETS.map((p) => preset(p))} />
+        <DemoGroup title="Uç durumlar" options={EDGE_PRESETS.map((p) => preset(p))} />
+        <DemoGroup title="Başvuru detayı" options={DETAIL_PRESETS.map((p) => preset(p, routePath("v1", "basvuru", DETAIL_DEMO_APP_ID)))} />
+        <DemoGroup title="Geri çekme isteği" options={[withdrawOption(false, "Başarılı"), withdrawOption(true, "Başarısız")]} />
         {requestGroups.map((g) => (
           <DemoGroup key={g.chatId} title={g.title} options={g.options} />
         ))}

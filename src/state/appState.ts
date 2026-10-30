@@ -1,5 +1,5 @@
 import { CircleMinus, type LucideIcon } from "lucide-react";
-import { baseApplications, ev, manyApplications, ownEv } from "../data/applications";
+import { baseApplications, ev, listingRemovedApplications, manyApplications, ownEv } from "../data/applications";
 import { JOBS, SEARCH_JOB_IDS } from "../data/jobs";
 import { conversationIdFor, MESSAGE_IDS, MESSAGES, REQUEST_ENDED_NOTE, REQUEST_SUBJECT, requestScenario, type RequestScenario } from "../data/messages";
 import { PROFILE, profilePreset, TODAY, TODAY_ISO } from "../data/user";
@@ -10,6 +10,7 @@ import type {
   ApplicationsTab,
   ChatMessage,
   DemoPreset,
+  DetailState,
   Job,
   ListState,
   ProfilePreset,
@@ -31,6 +32,10 @@ export interface AppState {
   /** Başvurularım filtreleri; ekranlar arasında gezinirken korunur. */
   appFilters: ApplicationFilters;
   listState: ListState;
+  /** Başvuru detayının yüklenme durumu (demo). */
+  detailState: DetailState;
+  /** Demo: geri çekme isteği başarısız olur. */
+  withdrawFails: boolean;
   q: string;
   sheetFilters: SheetFilters;
   /** Yazışmaya sonradan eklenen mesajlar (yazışma kimliğine göre). */
@@ -53,6 +58,8 @@ export const initialState: AppState = {
   tab: "devam",
   appFilters: EMPTY_FILTERS,
   listState: "dolu",
+  detailState: "dolu",
+  withdrawFails: false,
   q: "",
   sheetFilters: { mode: [], city: [] },
   chatMessages: {},
@@ -70,6 +77,8 @@ export type AppAction =
   | { type: "setAppFilters"; filters: ApplicationFilters }
   | { type: "toggleStatusFilter"; status: StatusLabel }
   | { type: "setListState"; listState: ListState }
+  | { type: "setDetailState"; detailState: DetailState }
+  | { type: "setWithdrawFails"; fails: boolean }
   | { type: "markRead"; id: number }
   | { type: "withdraw"; id: number; at: string }
   | { type: "undoWithdraw"; id: number }
@@ -104,6 +113,10 @@ export function appReducer(state: AppState, action: AppAction): AppState {
     }
     case "setListState":
       return { ...state, listState: action.listState };
+    case "setDetailState":
+      return { ...state, detailState: action.detailState };
+    case "setWithdrawFails":
+      return { ...state, withdrawFails: action.fails };
     case "markRead":
       return { ...state, apps: updateApp(state.apps, action.id, (a) => ({ ...a, unread: false })) };
     case "withdraw":
@@ -176,7 +189,7 @@ export function appReducer(state: AppState, action: AppAction): AppState {
 }
 
 function demoPreset(preset: DemoPreset): Partial<AppState> {
-  const reset = { tab: "devam", appFilters: EMPTY_FILTERS, listState: "dolu" } as const;
+  const reset = { tab: "devam", appFilters: EMPTY_FILTERS, listState: "dolu", detailState: "dolu" } as const;
   const onlyFirst = () => baseApplications().filter((a) => a.id === 1);
   switch (preset) {
     case "dolu":
@@ -189,6 +202,14 @@ function demoPreset(preset: DemoPreset): Partial<AppState> {
       return { ...reset, apps: baseApplications(), listState: "yukleniyor" };
     case "hata":
       return { ...reset, apps: baseApplications(), listState: "hata" };
+    case "cevrimdisi":
+      return { ...reset, apps: baseApplications(), listState: "cevrimdisi" };
+    case "ilan-kaldirildi":
+      return { ...reset, apps: listingRemovedApplications() };
+    case "detay-yukleniyor":
+      return { ...reset, apps: baseApplications(), detailState: "yukleniyor" };
+    case "detay-hata":
+      return { ...reset, apps: baseApplications(), detailState: "hata" };
     case "25":
       return { ...reset, apps: manyApplications() };
     case "tek":

@@ -1,7 +1,9 @@
-import { Calendar, Info, MapPin } from "lucide-react";
+import { Archive, Calendar, Info, MapPin } from "lucide-react";
+import type { MouseEvent } from "react";
 import { Link } from "react-router";
 import { STATUS } from "../../data/status";
 import { useCardNavigation } from "../../hooks/useCardNavigation";
+import { track } from "../../lib/analytics";
 import { cn } from "../../lib/utils";
 import { routePath, useVersion, useWithBack } from "../../routes/paths";
 import { useAppState } from "../../state/AppStateProvider";
@@ -15,10 +17,12 @@ import { StatusBadge } from "./StatusBadge";
 interface ApplicationCardProps {
   app: Application;
   density?: "comfortable" | "compact";
+  /** Listedeki sırası (1'den); ölçüm için. */
+  position?: number;
 }
 
 /** DS Application Card: şirket, durum rozeti, kısa aşama göstergesi ve sıradaki adım. */
-export function ApplicationCard({ app, density = "comfortable" }: ApplicationCardProps) {
+export function ApplicationCard({ app, density = "comfortable", position }: ApplicationCardProps) {
   const state = useAppState();
   const ver = useVersion();
   const job = getJob(state, app.id)!;
@@ -28,7 +32,21 @@ export function ApplicationCard({ app, density = "comfortable" }: ApplicationCar
   const requestNote = getRequestEndedNote(state, app.id);
   // Kart ana sayfada da listelenir; detayın geri düğmesi kartın bulunduğu ekrana döner.
   const href = useWithBack()(routePath(ver, "basvuru", app.id));
-  const onClick = useCardNavigation(href);
+  const navigate = useCardNavigation(href);
+  // Kartın kendisine ya da başlık bağlantısına basış sayılır; karttaki diğer düğmeler sayılmaz.
+  const onClick = (e: MouseEvent) => {
+    const target = (e.target as Element).closest("a, button");
+    if (!target || target.classList.contains("ds-app-card__link")) {
+      track("application_card_tapped", {
+        application_id: app.id,
+        status: label,
+        has_new_update: app.unread,
+        list_position: position ?? null,
+        tab: ended ? "sonuc" : "devam",
+      });
+    }
+    navigate(e);
+  };
 
   return (
     <article
@@ -66,6 +84,12 @@ export function ApplicationCard({ app, density = "comfortable" }: ApplicationCar
           <Icon icon={Calendar} size={16} />
           {app.ago}
         </span>
+        {app.listingRemoved && (
+          <span>
+            <Icon icon={Archive} size={16} />
+            İlan yayından kaldırıldı
+          </span>
+        )}
       </p>
       <div className="ds-app-card__status">
         <StatusBadge app={app} />

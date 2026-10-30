@@ -161,13 +161,14 @@
  */
 .ds-bnav--glass {
   --bnav-spring: linear(0, 0.15, 0.422, 0.669, 0.844, 0.947, 0.998, 1.017, 1.02, 1.016, 1.01, 1.005, 1.002, 1.001 65%, 1);
-  --bnav-radius: 22px;
+  /* Pill da kapsül: iç ve dış köşeler her yükseklikte eş merkezli kalır. */
+  --bnav-radius: var(--ds-radius-pill);
   --bnav-sheen: color-mix(in srgb, var(--neutral-0) 80%, transparent);
   --bnav-pill-sheen: color-mix(in srgb, var(--neutral-0) 60%, transparent);
   position: relative;
   width: auto;
   margin: 0 var(--ds-space-3) var(--ds-space-2);
-  padding: var(--ds-space-1) 6px;
+  padding: var(--ds-space-1);
   border: 0;
   border-radius: var(--ds-radius-pill);
   background: color-mix(in srgb, var(--ds-surface-raised) 74%, transparent);
@@ -193,8 +194,13 @@
     background: color-mix(in srgb, var(--ds-surface-raised) 96%, transparent);
   }
 }
+/*
+ * Etiket kapsülün alt köşe eğrisinden uzak durur: ikon kutusu ikona daralır, içerik dikeyde ortalanır.
+ * Boş alan sekmelere eşit eklenir (flex-basis: auto); uzun etiketler de yanlarda pay alır.
+ */
 .ds-bnav--glass .ds-bnav__item {
-  padding-inline: 6px;
+  flex: 1 1 auto;
+  padding: var(--ds-space-2) 6px;
   border-radius: var(--bnav-radius);
   transition: background-color var(--ds-motion-duration-fast) var(--ds-motion-easing-standard);
 }
@@ -216,13 +222,16 @@
 /* İkon zemini pill'e taşındı; ikon kutusu daralır, rozet ikon merkezine göre yerleşir. */
 .ds-bnav--glass .ds-bnav__item .ds-bnav__icon {
   width: 40px;
+  height: 24px;
   background: transparent;
 }
 .ds-bnav--glass .ds-bnav__badge {
+  top: -4px;
   left: calc(50% + 4px);
   border-color: transparent;
 }
 .ds-bnav--glass .ds-bnav__badge.is-dot {
+  top: 0;
   left: calc(50% + 6px);
 }
 .ds-bnav__pill {
@@ -254,13 +263,9 @@
 @media (max-width: 374px) {
   .ds-bnav--glass {
     margin-inline: var(--ds-space-2);
-    padding-inline: var(--ds-space-1);
   }
 }
 @media (max-width: 359px) {
-  .ds-bnav--glass {
-    --bnav-radius: 16px;
-  }
   .ds-bnav--glass .ds-bnav__item {
     padding-inline: 2px;
   }

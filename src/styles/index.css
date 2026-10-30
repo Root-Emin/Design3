@@ -177,7 +177,6 @@
     color: var(--text-primary);
     background: var(--bg-subtle);
     -webkit-font-smoothing: antialiased;
-    font-feature-settings: "cv11", "ss01";
     overflow: hidden;
   }
   button,

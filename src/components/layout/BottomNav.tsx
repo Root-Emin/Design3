@@ -55,6 +55,7 @@ export function BottomNav({ active }: { active?: NavKey }) {
         <Link
           key={key}
           to={routePath(ver, key)}
+          state={{ source: "bottom_nav" }}
           className="ds-bnav__item"
           aria-current={active === key ? "page" : undefined}
           data-testid={`nav-${key}`}
@@ -64,7 +65,7 @@ export function BottomNav({ active }: { active?: NavKey }) {
             {key === "basvurularim" && n > 0 && (
               <>
                 <span className="ds-bnav__badge" aria-hidden="true">
-                  {n}
+                  {n > 99 ? "99+" : n}
                 </span>
                 <span className="ds-sr">, {n} yeni durum güncellemesi</span>
               </>

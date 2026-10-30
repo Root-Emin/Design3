@@ -422,26 +422,36 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  --type-display-size: 40px;
-  --type-display-line: 48px;
+  /*
+   * Başlıklar akışkandır: 320px genişlikte bir kademe küçük, 400px ve üstünde DS değeri. Arada doğrusal
+   * ilerler; --type-fluid 0px–1px arası bir ilerlemedir. Başlık altı roller (title, gövde, etiket, açıklama)
+   * okunabilirlik ve form alanlarında iOS yakınlaştırması olmasın diye sabittir.
+   */
+  --type-fluid: clamp(0px, (100vw - 320px) / 80, 1px);
+  --type-display-size: calc(32px + 8 * var(--type-fluid));
+  --type-display-line: calc(40px + 8 * var(--type-fluid));
   --type-display-weight: 700;
   --type-display-tracking: -0.02em;
-  --type-display: 700 40px/48px var(--font-family-base);
-  --type-heading-1-size: 32px;
-  --type-heading-1-line: 40px;
+  --type-display: 700 var(--type-display-size) / var(--type-display-line)
+    var(--font-family-base);
+  --type-heading-1-size: calc(28px + 4 * var(--type-fluid));
+  --type-heading-1-line: calc(36px + 4 * var(--type-fluid));
   --type-heading-1-weight: 700;
   --type-heading-1-tracking: -0.015em;
-  --type-heading-1: 700 32px/40px var(--font-family-base);
-  --type-heading-2-size: 24px;
-  --type-heading-2-line: 32px;
+  --type-heading-1: 700 var(--type-heading-1-size) / var(--type-heading-1-line)
+    var(--font-family-base);
+  --type-heading-2-size: calc(22px + 2 * var(--type-fluid));
+  --type-heading-2-line: calc(30px + 2 * var(--type-fluid));
   --type-heading-2-weight: 600;
   --type-heading-2-tracking: -0.01em;
-  --type-heading-2: 600 24px/32px var(--font-family-base);
-  --type-heading-3-size: 20px;
-  --type-heading-3-line: 28px;
+  --type-heading-2: 600 var(--type-heading-2-size) / var(--type-heading-2-line)
+    var(--font-family-base);
+  --type-heading-3-size: calc(18px + 2 * var(--type-fluid));
+  --type-heading-3-line: calc(26px + 2 * var(--type-fluid));
   --type-heading-3-weight: 600;
   --type-heading-3-tracking: -0.005em;
-  --type-heading-3: 600 20px/28px var(--font-family-base);
+  --type-heading-3: 600 var(--type-heading-3-size) / var(--type-heading-3-line)
+    var(--font-family-base);
   --type-title-size: 16px;
   --type-title-line: 24px;
   --type-title-weight: 600;
@@ -554,34 +564,39 @@
   --ds-red-900: var(--red-900);
   --ds-font-mono:
     ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-  --ds-type-display-size: 28px;
-  --ds-type-display-line: 36px;
-  --ds-type-display-weight: 700;
-  --ds-type-display: 700 28px/36px var(--ds-font-sans);
-  --ds-type-title-lg-size: 22px;
-  --ds-type-title-lg-line: 28px;
-  --ds-type-title-lg-weight: 700;
-  --ds-type-title-lg: 700 22px/28px var(--ds-font-sans);
-  --ds-type-title-md-size: 18px;
-  --ds-type-title-md-line: 24px;
-  --ds-type-title-md-weight: 600;
-  --ds-type-title-md: 600 18px/24px var(--ds-font-sans);
-  --ds-type-title-sm-size: 16px;
-  --ds-type-title-sm-line: 22px;
-  --ds-type-title-sm-weight: 600;
-  --ds-type-title-sm: 600 16px/22px var(--ds-font-sans);
-  --ds-type-body-lg-size: 16px;
-  --ds-type-body-lg-line: 24px;
-  --ds-type-body-lg-weight: 400;
-  --ds-type-body-lg: 400 16px/24px var(--ds-font-sans);
-  --ds-type-body-md-size: 14px;
-  --ds-type-body-md-line: 20px;
-  --ds-type-body-md-weight: 400;
-  --ds-type-body-md: 400 14px/20px var(--ds-font-sans);
-  --ds-type-body-sm-size: 13px;
-  --ds-type-body-sm-line: 18px;
-  --ds-type-body-sm-weight: 400;
-  --ds-type-body-sm: 400 13px/18px var(--ds-font-sans);
+  /*
+   * ds-* bileşenlerinin yazı rolleri en-* ölçeğine bağlıdır: aynı rol (başlık, kart başlığı, gövde,
+   * açıklama) her bileşende aynı boyutta çizilir ve başlıklar aynı akışkan ölçekle büyür. Etiketler
+   * (label-*, düğme ve rozetler) yarı kalın ayrı roldür, değerleri ölçeğin üstündedir.
+   */
+  --ds-type-display-size: var(--type-heading-1-size);
+  --ds-type-display-line: var(--type-heading-1-line);
+  --ds-type-display-weight: var(--type-heading-1-weight);
+  --ds-type-display: var(--type-heading-1);
+  --ds-type-title-lg-size: var(--type-heading-2-size);
+  --ds-type-title-lg-line: var(--type-heading-2-line);
+  --ds-type-title-lg-weight: var(--type-heading-2-weight);
+  --ds-type-title-lg: var(--type-heading-2);
+  --ds-type-title-md-size: var(--type-heading-3-size);
+  --ds-type-title-md-line: var(--type-heading-3-line);
+  --ds-type-title-md-weight: var(--type-heading-3-weight);
+  --ds-type-title-md: var(--type-heading-3);
+  --ds-type-title-sm-size: var(--type-title-size);
+  --ds-type-title-sm-line: var(--type-title-line);
+  --ds-type-title-sm-weight: var(--type-title-weight);
+  --ds-type-title-sm: var(--type-title);
+  --ds-type-body-lg-size: var(--type-body-large-size);
+  --ds-type-body-lg-line: var(--type-body-large-line);
+  --ds-type-body-lg-weight: var(--type-body-large-weight);
+  --ds-type-body-lg: var(--type-body-large);
+  --ds-type-body-md-size: var(--type-body-medium-size);
+  --ds-type-body-md-line: var(--type-body-medium-line);
+  --ds-type-body-md-weight: var(--type-body-medium-weight);
+  --ds-type-body-md: var(--type-body-medium);
+  --ds-type-body-sm-size: var(--type-caption-size);
+  --ds-type-body-sm-line: var(--type-caption-line);
+  --ds-type-body-sm-weight: var(--type-caption-weight);
+  --ds-type-body-sm: var(--type-caption);
   --ds-type-label-lg-size: 16px;
   --ds-type-label-lg-line: 24px;
   --ds-type-label-lg-weight: 600;
@@ -594,10 +609,10 @@
   --ds-type-label-sm-line: 16px;
   --ds-type-label-sm-weight: 600;
   --ds-type-label-sm: 600 12px/16px var(--ds-font-sans);
-  --ds-type-caption-size: 12px;
-  --ds-type-caption-line: 16px;
-  --ds-type-caption-weight: 400;
-  --ds-type-caption: 400 12px/16px var(--ds-font-sans);
+  --ds-type-caption-size: var(--type-caption-size);
+  --ds-type-caption-line: var(--type-caption-line);
+  --ds-type-caption-weight: var(--type-caption-weight);
+  --ds-type-caption: var(--type-caption);
   --ds-radius-none: 0;
   --ds-radius-sm: 6px;
   --ds-radius-md: 8px;

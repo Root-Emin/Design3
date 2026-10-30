@@ -84,7 +84,7 @@ export function HomePage() {
           <section className="grid gap-12">
             <div className="flex items-center justify-between gap-8">
               <Heading look="title">Son güncellenen başvurun</Heading>
-              <Button variant="tertiary" size="sm" to={routePath("v1", "basvurularim")} testId="home-all-applications">
+              <Button variant="tertiary" size="sm" to={routePath("v1", "basvurularim")} linkState={{ source: "home_see_all" }} testId="home-all-applications">
                 Tümünü gör
               </Button>
             </div>

@@ -12,7 +12,7 @@ interface ListItemProps {
   avatar?: ReactNode;
   meta?: string;
   to?: string;
-  /** Adres yerine eylem: satır düğme olarak çizilir (chevron korunur). */
+  /** Adres yoksa satır düğme olarak çizilir (chevron korunur); adresle birlikte verilirse bağlantıya basınca çağrılır. */
   onClick?: () => void;
   /**
    * "event": işveren hareketleri listesi (ikincil ikon, küçük zaman satırı, satır kırılan başlık).
@@ -65,7 +65,7 @@ export function ListItem({ title, sup, icon, avatar, meta, to, onClick, variant 
   );
   if (to) {
     return (
-      <Link to={to} className={cls} data-testid={testId}>
+      <Link to={to} onClick={onClick} className={cls} data-testid={testId}>
         {content}
       </Link>
     );

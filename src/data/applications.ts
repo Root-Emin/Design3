@@ -1,4 +1,4 @@
-import { Calendar, CircleCheck, CircleMinus, Clock, Eye, FileText, Send } from "lucide-react";
+import { Archive, Calendar, CircleCheck, CircleMinus, Clock, Eye, FileText, Send } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { Application, ApplicationEvent, Stage } from "../types";
 import { EXTRA_JOB_COUNT, EXTRA_JOB_FIRST_ID, JOBS } from "./jobs";
@@ -50,6 +50,18 @@ export function baseApplications(): Application[] {
       events: [ownEv(CircleMinus, "Başvurunu geri çektin", "12 Eki 09.00"), ev(Eye, "Tepe Sağlık Grubu başvurunu görüntüledi", "3 Eki 11.25"), ownEv(Send, "Başvurunu gönderdin", "1 Eki 18.00")],
     },
   ];
+}
+
+/** "İlan kaldırıldı" uç durumu: Mavi Liman Perakende ilanı, başvuru değerlendirmedeyken yayından kalktı. */
+export function listingRemovedApplications(): Application[] {
+  return baseApplications().map((a) =>
+    a.id === 3
+      ? {
+          ...a, listingRemoved: "26 Eki", upd: 20261026.18, updLabel: "26 Eki", unread: true,
+          events: [ev(Archive, "Mavi Liman Perakende ilanı yayından kaldırdı", "26 Eki 18.00"), ...a.events],
+        }
+      : a,
+  );
 }
 
 /** "25 başvuru" uç durumu: temel 7 başvuru + 18 üretilmiş başvuru. */

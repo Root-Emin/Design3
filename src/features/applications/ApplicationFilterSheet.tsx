@@ -24,6 +24,7 @@ import { Sheet } from "../../components/ui/Sheet";
 import { TextField } from "../../components/ui/TextField";
 import { STATUS, STATUS_LABELS } from "../../data/status";
 import { TODAY_ISO } from "../../data/user";
+import { track } from "../../lib/analytics";
 import { cn } from "../../lib/utils";
 import { useAppDispatch, useAppState } from "../../state/AppStateProvider";
 import {
@@ -132,7 +133,7 @@ function DateCard({ id, label, value, min, max, invalid, errorId, onChange, test
       <span className="grid min-w-0 flex-1" aria-hidden="true">
         <span className="text-caption text-secondary">{label}</span>
         <span className={cn("[font:var(--type-label)]", value ? "font-semibold text-primary" : "text-tertiary")}>
-          {value ? formatDate(value) : "Tarih seçin"}
+          {value ? formatDate(value) : "Tarih seç"}
         </span>
       </span>
       <Icon icon={ChevronDown} size={16} className="ds-icon -ml-4 text-secondary" />
@@ -243,6 +244,7 @@ export function ApplicationFilterSheet() {
   const setDay = (edge: "from" | "to", value: string) => set({ date: { ...shownRange, preset: null, [edge]: value } });
 
   function clear() {
+    track("applications_filter_cleared", { cleared_filter_count: activeFilterCount(draft) });
     setCustomPicked(false);
     setDraft(EMPTY_FILTERS);
   }
@@ -250,6 +252,12 @@ export function ApplicationFilterSheet() {
   function apply() {
     if (invalidRange) return;
     const filters = normalizeFilters(draft);
+    track("applications_filter_applied", {
+      has_position_query: filters.title !== "",
+      has_company_query: filters.company !== "",
+      date_preset: filters.date.preset ?? (hasDateFilter(filters.date) ? "custom" : null),
+      result_count: results.length,
+    });
     dispatch({ type: "setAppFilters", filters });
     // Sonuçların hepsi diğer sekmedeyse oraya geç: boş bir sekmede bırakma.
     const open = results.filter((a) => !isClosed(a)).length;
@@ -269,6 +277,7 @@ export function ApplicationFilterSheet() {
       closeLabel="Kapat"
       onClose={closeOverlay}
       size="auto"
+      focusTitle
       testId="app-filter-sheet"
       footer={
         <div className="grid w-full gap-8">
@@ -292,7 +301,7 @@ export function ApplicationFilterSheet() {
         </div>
       }
     >
-      <Section id="af-g1" icon={Briefcase} title="Pozisyon ve şirket" description="Belirli bir pozisyon veya şirkete ait başvuruları filtreleyin.">
+      <Section id="af-g1" icon={Briefcase} title="Pozisyon ve şirket" description="Belirli bir pozisyonun ya da şirketin başvurularını filtrele.">
         <TextField
           id="af-title"
           label="Pozisyon adı"
@@ -314,14 +323,14 @@ export function ApplicationFilterSheet() {
           value={draft.company}
           onChange={(e) => set({ company: e.target.value })}
           onKeyDown={onEnter}
-          placeholder="Şirket adı girin"
+          placeholder="Şirket adını yaz"
           autoComplete="off"
           enterKeyHint="search"
           testId="app-filter-company"
         />
       </Section>
 
-      <Section id="af-g2" icon={CalendarDays} title="Başvuru tarihi" description="Başvuruların yapıldığı tarih aralığını seçin.">
+      <Section id="af-g2" icon={CalendarDays} title="Başvuru tarihi" description="Başvurduğun tarih aralığını seç.">
         {/* Dört seçim telefonda tek satıra sığmaz: dengeli 2×2, yer olunca tek satır. */}
         <div className="@container" role="group" aria-labelledby="af-g2-t">
           <div className="grid grid-cols-2 gap-8 *:justify-center @min-[33rem]:grid-cols-4">
@@ -365,7 +374,7 @@ export function ApplicationFilterSheet() {
         </div>
       </Section>
 
-      <Section id="af-g3" icon={ListFilter} title="Başvuru durumu" description="Göstermek istediğiniz başvuru durumlarını seçin.">
+      <Section id="af-g3" icon={ListFilter} title="Başvuru durumu" description="Görmek istediğin başvuru durumlarını seç.">
         <div className="grid grid-cols-2 gap-8" role="group" aria-labelledby="af-g3-t">
           {STATUS_LABELS.map((s) => (
             <StatusOption

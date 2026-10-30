@@ -113,6 +113,7 @@
   height: var(--size-chip);
   padding: 0 var(--space-8);
   font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
 }
 .en-job__salary {
   display: flex;

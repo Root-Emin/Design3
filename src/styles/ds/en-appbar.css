@@ -28,6 +28,8 @@
   min-width: 0;
   margin: 0;
   font: var(--type-title);
+  font-size: calc(var(--type-title-size) * 1.25);
+  line-height: calc(var(--type-title-line) * 1.25);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

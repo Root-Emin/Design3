@@ -1,4 +1,5 @@
 import { Briefcase, CircleCheck, ListFilter, LoaderCircle } from "lucide-react";
+import { useLocation } from "react-router";
 import { ApplicationCard } from "../../components/application/ApplicationCard";
 import { AppBar, AppMenu } from "../../components/layout/AppBar";
 import { Alert } from "../../components/ui/Alert";
@@ -9,10 +10,11 @@ import { Progress } from "../../components/ui/Progress";
 import { CardSkeletonList } from "../../components/ui/Skeleton";
 import { Tabs } from "../../components/ui/Tabs";
 import { STATUS } from "../../data/status";
+import { track, useTrackLoaded, useTrackOnce } from "../../lib/analytics";
 import { routePath, useBackTarget } from "../../routes/paths";
 import { useAppDispatch, useAppState } from "../../state/AppStateProvider";
 import { activeFilterChips, activeFilterCount, EMPTY_FILTERS } from "../../state/applicationFilters";
-import { filterApps, isClosed, sortByUpdated } from "../../state/appState";
+import { filterApps, isClosed, sortByUpdated, unreadCount } from "../../state/appState";
 import { useOverlay } from "../../state/OverlayProvider";
 import { STAGES, type ApplicationFilters } from "../../types";
 import { Content } from "../Content";
@@ -36,11 +38,41 @@ export function ApplicationsPage() {
   const openAnyStatus = filterApps(state, { ...appFilters, statuses: [] }).filter((a) => !isClosed(a));
   // Devam eden sekmesinde aşamalar hızlı durum satırında görünür; etiket olarak tekrar edilmez.
   const chips = activeFilterChips(appFilters, ongoing ? STAGES : []);
+  const list = ongoing ? open : closed;
+  const loaded = listState === "dolu" || listState === "cevrimdisi";
+  let emptyReason: string | null = null;
+  if (loaded && apps.length === 0) emptyReason = "no_applications";
+  else if (loaded && list.length === 0) emptyReason = filterCount ? "filter_no_result" : "tab_empty";
+
+  // Ölçüm (handoff Bölüm 7): kaynak, giriş noktasının bağlantı durumundan gelir.
+  const source = (useLocation().state as { source?: string } | null)?.source ?? "other";
+  useTrackOnce("applications_list_viewed", {
+    source,
+    tab,
+    ongoing_count: apps.filter((a) => !isClosed(a)).length,
+    closed_count: apps.filter(isClosed).length,
+    new_update_count: unreadCount(state),
+  });
+  useTrackLoaded("applications_list_loaded", loaded, { item_count: apps.length });
+  useTrackOnce("applications_load_failed", { screen: "applications_list", error_type: "network" }, listState === "hata");
+  useTrackOnce("applications_empty_viewed", { reason: emptyReason }, emptyReason !== null, emptyReason);
 
   const setFilters = (filters: ApplicationFilters) => dispatch({ type: "setAppFilters", filters });
-  const clearFilters = () => setFilters(EMPTY_FILTERS);
+  const clearFilters = () => {
+    track("applications_filter_cleared", { cleared_filter_count: filterCount });
+    setFilters(EMPTY_FILTERS);
+  };
+  const setTab = (t: typeof tab) => {
+    track("applications_tab_changed", { tab: t, item_count: (t === "devam" ? open : closed).length });
+    dispatch({ type: "setTab", tab: t });
+  };
+  const selectStatus = (status: string, resultCount: number, apply: () => void) => {
+    track("applications_status_chip_selected", { status, result_count: resultCount });
+    apply();
+  };
 
   function retry() {
+    track("applications_retry_tapped", { screen: "applications_list" });
     dispatch({ type: "setListState", listState: "yukleniyor" });
     window.setTimeout(() => dispatch({ type: "setListState", listState: "dolu" }), RETRY_MS);
   }
@@ -60,7 +92,7 @@ export function ApplicationsPage() {
           action={
             <div className="flex flex-wrap justify-center gap-8">
               {other > 0 && (
-                <Button variant="secondary" onClick={() => dispatch({ type: "setTab", tab: otherTab })} testId="filter-other-tab">
+                <Button variant="secondary" onClick={() => setTab(otherTab)} testId="filter-other-tab">
                   {`${TAB_NAME[otherTab]} sekmesine geç`}
                 </Button>
               )}
@@ -129,11 +161,32 @@ export function ApplicationsPage() {
       );
     }
 
-    const list = ongoing ? open : closed;
     return (
       <>
+        {listState === "cevrimdisi" && (
+          <Alert
+            tone="info"
+            title="Çevrimdışısın"
+            message="İnternet bağlantın yok. Son yüklenen başvuruların gösteriliyor; bağlantın gelince güncellenir."
+            action={
+              <Button variant="secondary" size="sm" icon={LoaderCircle} onClick={retry} testId="offline-retry">
+                Tekrar dene
+              </Button>
+            }
+          />
+        )}
         <div className="flex flex-wrap items-center gap-8" data-testid="app-filter-bar">
-          <Button variant="secondary" size="sm" block icon={ListFilter} onClick={() => openOverlay({ kind: "applicationFilter" })} testId="app-filter-open">
+          <Button
+            variant="secondary"
+            size="sm"
+            block
+            icon={ListFilter}
+            onClick={() => {
+              track("applications_filter_opened", { active_filter_count: filterCount });
+              openOverlay({ kind: "applicationFilter" });
+            }}
+            testId="app-filter-open"
+          >
             {filterCount ? `Filtrele (${filterCount})` : "Filtrele"}
           </Button>
           {chips.map((c) => (
@@ -164,7 +217,7 @@ export function ApplicationsPage() {
               label="Tümü"
               selected={appFilters.statuses.length === 0}
               count={openAnyStatus.length}
-              onClick={() => setFilters({ ...appFilters, statuses: [] })}
+              onClick={() => selectStatus("Tümü", openAnyStatus.length, () => setFilters({ ...appFilters, statuses: [] }))}
               testId="filter-tumu"
             />
             {STAGES.map((s) => (
@@ -173,7 +226,9 @@ export function ApplicationsPage() {
                 label={s}
                 selected={appFilters.statuses.includes(s)}
                 count={openAnyStatus.filter((a) => a.stage === s).length}
-                onClick={() => dispatch({ type: "toggleStatusFilter", status: s })}
+                onClick={() =>
+                  selectStatus(s, openAnyStatus.filter((a) => a.stage === s).length, () => dispatch({ type: "toggleStatusFilter", status: s }))
+                }
                 testId={`filter-${STATUS[s].key}`}
               />
             ))}
@@ -181,8 +236,8 @@ export function ApplicationsPage() {
         )}
         {list.length > 0 ? (
           <div className="grid gap-12" data-testid="application-list">
-            {sortByUpdated(list).map((a) => (
-              <ApplicationCard key={a.id} app={a} />
+            {sortByUpdated(list).map((a, i) => (
+              <ApplicationCard key={a.id} app={a} position={i + 1} />
             ))}
           </div>
         ) : (
@@ -201,7 +256,7 @@ export function ApplicationsPage() {
           { id: "sonuc", label: TAB_NAME.sonuc, count: closed.length },
         ]}
         active={tab}
-        onChange={(t) => dispatch({ type: "setTab", tab: t })}
+        onChange={setTab}
         variant="segmented"
         bar={(tabs) => (
           <AppBar title="Başvurularım" variant="rounded" center back={back} bell={false} actions={<AppMenu />} bottom={tabs} pinBottom />

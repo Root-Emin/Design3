@@ -1,7 +1,9 @@
 import { ArrowRight, Check, Circle, CircleCheck, Info, Minus } from "lucide-react";
+import { STATUS } from "../../data/status";
 import { cn } from "../../lib/utils";
 import { routePath } from "../../routes/paths";
-import { isClosed } from "../../state/appState";
+import { useAppState } from "../../state/AppStateProvider";
+import { getRequestEndedNote, isClosed } from "../../state/appState";
 import { STAGES, type Application } from "../../types";
 import { Icon } from "../icons/Icon";
 import { Button } from "../ui/Button";
@@ -32,6 +34,8 @@ function StepNode({ state }: { state: StepState }) {
 }
 
 function TrackNote({ app }: { app: Application }) {
+  // İşveren daveti/teklifi iptal ettiyse ya da süre dolduysa sıradaki adım yerine bu yazılır (kartla aynı).
+  const requestNote = getRequestEndedNote(useAppState(), app.id);
   if (app.outcome === "Sonuçlanmadı") {
     return (
       <div className="en-track__note is-neutral">
@@ -55,6 +59,14 @@ function TrackNote({ app }: { app: Application }) {
       </div>
     );
   }
+  if (requestNote) {
+    return (
+      <p className="en-track__note is-neutral" data-testid="track-next">
+        <Icon icon={Info} size={16} />
+        <span>{requestNote}</span>
+      </p>
+    );
+  }
   if (app.stage === "Teklif") {
     return (
       <p className="en-track__note is-success">
@@ -63,7 +75,15 @@ function TrackNote({ app }: { app: Application }) {
       </p>
     );
   }
-  return null;
+  // B14: kartta olan "Sırada" satırı detayda da durur; aday detaydan baktığında da sıradaki adımı görür.
+  return (
+    <p className="en-track__note is-neutral" data-testid="track-next">
+      <Icon icon={Info} size={16} />
+      <span>
+        <strong>Sırada:</strong> {STATUS[app.stage].next}
+      </span>
+    </p>
+  );
 }
 
 /** DS Tracker (dikey): tüm aşamalar, tarihleri ve sonuç notu. */

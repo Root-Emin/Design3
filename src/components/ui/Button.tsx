@@ -16,7 +16,10 @@ interface ButtonProps {
   iconPosition?: "start" | "end";
   /** Verilirse düğme bağlantı olarak çizilir. */
   to?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  /** Bağlantının taşıdığı gezinme durumu (ör. ölçüm için `source`). */
+  linkState?: unknown;
+  /** Bağlantı olarak çizilen düğmede de basınca çağrılır (ör. ölçüm). */
+  onClick?: MouseEventHandler<HTMLElement>;
   disabled?: boolean;
   loading?: boolean;
   success?: boolean;
@@ -35,6 +38,7 @@ export function Button({
   icon,
   iconPosition = "start",
   to,
+  linkState,
   onClick,
   disabled,
   loading,
@@ -84,7 +88,7 @@ export function Button({
 
   if (to) {
     return (
-      <Link to={to} className={cn(cls, "no-underline")} data-testid={testId}>
+      <Link to={to} state={linkState} onClick={onClick} className={cn(cls, "no-underline")} data-testid={testId}>
         {content}
       </Link>
     );

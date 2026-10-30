@@ -1,6 +1,6 @@
 import { Building2, Clock, MapPin } from "lucide-react";
 import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { StatusBadge } from "../components/application/StatusBadge";
 import { JobBenefitsSection } from "../components/job/JobBenefits";
 import { SaveJobButton } from "../components/job/SaveJobButton";
@@ -12,12 +12,24 @@ import { MatchRing } from "../components/ui/Match";
 import { Panel } from "../components/ui/Panel";
 import { Salary } from "../components/ui/Salary";
 import { Heading, MutedText } from "../components/ui/Typography";
+import { TODAY_ISO } from "../data/user";
+import { sourceRoute, useTrackOnce } from "../lib/analytics";
+import { fromIsoDay } from "../lib/format";
 import { routePath, useBackTarget, useVersion, useWithBack } from "../routes/paths";
 import { useAppState } from "../state/AppStateProvider";
-import { findApp, getJob } from "../state/appState";
+import { findApp, getJob, statusLabel } from "../state/appState";
 import { useOverlay } from "../state/OverlayProvider";
 import { Content, MediaHead } from "./Content";
 import { NotFoundPage } from "./NotFoundPage";
+
+/** İlanın açıldığı ekran (geri hedefinden). */
+const JOB_SOURCE: Record<string, string> = {
+  ara: "search",
+  "kayitli-ilanlar": "saved",
+  basvuru: "application_detail",
+  bildirimler: "notification",
+};
+const DAY_MS = 86_400_000;
 
 interface JobPageProps {
   /** "/basvur/:id" adresi: ekran açılınca başvuru formu da açılır. */
@@ -37,6 +49,21 @@ export function JobPage({ openApply }: JobPageProps) {
   const back = useBackTarget(app ? routePath(ver, "basvuru", id) : routePath(ver, "ara"));
   const withBack = useWithBack();
   const autoOpen =openApply && !!job && (ver === "baseline" || !app);
+  const { search } = useLocation();
+
+  // Ölçüm (handoff Bölüm 7): başvurulmuş ilanın Başvurularım dışından açılması "ilana dönüş" sayılır.
+  useTrackOnce(
+    "job_detail_viewed",
+    {
+      job_id: id,
+      has_application: !!app,
+      application_status: app ? statusLabel(app) : null,
+      source: JOB_SOURCE[sourceRoute(search) ?? ""] ?? "other",
+      days_since_application: app ? Math.round((fromIsoDay(TODAY_ISO).getTime() - fromIsoDay(app.appliedOn).getTime()) / DAY_MS) : null,
+    },
+    !!job,
+    id,
+  );
 
   useEffect(() => {
     if (autoOpen) openOverlay({ kind: "apply", jobId: id });
@@ -120,7 +147,7 @@ export function JobPage({ openApply }: JobPageProps) {
         <JobBenefitsSection job={job} />
         <MutedText>{`İlan tarihi: ${job.posted}`}</MutedText>
       </Content>
-      <div className="sticky bottom-[var(--bnav-overlap,0px)] z-(--z-sticky) flex items-center gap-12 bg-surface px-16 py-12 shadow-hairline-top">{bar}</div>
+      <div className="sticky bottom-0 z-(--z-sticky) flex items-center gap-12 bg-surface px-16 py-12 shadow-hairline-top">{bar}</div>
     </>
   );
 }

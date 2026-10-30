@@ -58,6 +58,8 @@ export interface Application {
   unread: boolean;
   dates: Partial<Record<Stage, string>>;
   events: ApplicationEvent[];
+  /** İşveren ilanı yayından kaldırdıysa o gün ("26 Eki"); başvuru ve geçmişi kalır, ilan açılamaz. */
+  listingRemoved?: string;
   /** Geri çekme işleminden önceki hâl; "Geri al" için tutulur. */
   beforeWithdraw?: Pick<Application, "outcome" | "events" | "upd">;
 }
@@ -143,8 +145,12 @@ export interface Conversation {
 
 export type Version = "v1" | "baseline";
 export type ApplicationsTab = "devam" | "sonuc";
-export type ListState = "dolu" | "yukleniyor" | "hata";
-export type DemoPreset = "dolu" | "bos" | "filtre" | "yukleniyor" | "hata" | "25" | "tek";
+/** "cevrimdisi": bağlantı yok; son yüklenen liste uyarıyla birlikte gösterilir. */
+export type ListState = "dolu" | "yukleniyor" | "hata" | "cevrimdisi";
+export type DetailState = "dolu" | "yukleniyor" | "hata";
+export type DemoPreset =
+  | "dolu" | "bos" | "filtre" | "yukleniyor" | "hata" | "cevrimdisi" | "25" | "tek"
+  | "ilan-kaldirildi" | "detay-yukleniyor" | "detay-hata";
 
 export interface SheetFilters {
   mode: string[];

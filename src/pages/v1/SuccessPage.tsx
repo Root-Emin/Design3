@@ -28,7 +28,7 @@ export function SuccessPage() {
           {`CV’n${state.lastCover ? " ve ön yazın " : " "}${job.company} şirketine iletildi. İşveren başvurunu incelediğinde Başvurularım’da görürsün.`}
         </MutedText>
         <div className="mt-16 grid w-full gap-8">
-          <Button block to={routePath("v1", "basvurularim")} testId="success-go-applications">
+          <Button block to={routePath("v1", "basvurularim")} linkState={{ source: "success_screen" }} testId="success-go-applications">
             Başvurularıma git
           </Button>
           <Button variant="secondary" block to={routePath("v1", "ara")} testId="success-similar">
